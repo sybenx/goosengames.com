@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goosen Games</title>
+<meta name="description" content="Goosen Games">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0e13" media="(prefers-color-scheme: dark)">
+<style>
+  :root{ --page:#f7f5f0; }
+  @media (prefers-color-scheme: dark){ :root{ --page:#0b0e13; } }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    background:var(--page);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6vmin;
+  }
+  .logo{
+    width:min(44vmin, 340px);
+    height:auto;
+    display:block;
+  }
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+</style>
+</head>
+<body>
+  <h1 class="sr-only">Goosen Games</h1>
+  <img class="logo" src="/logo.svg" alt="Goosen Games">
+</body>
+</html>

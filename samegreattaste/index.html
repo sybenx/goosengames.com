@@ -1,0 +1,3061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Same Great Taste</title>
+<style>
+/* ============================================================
+   SAME GREAT TASTE — styles
+   Three act themes share one component set. The theme drifts;
+   the components (and the product photo) do not.
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select{font:inherit}
+img,svg{display:block;max-width:100%}
+
+:root{
+  --maxw:700px;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(20,14,8,.08),0 6px 24px rgba(20,14,8,.07);
+}
+
+/* ---- Act 1: the stand. Warm cream, chalk green, hand-set serif. ---- */
+body{
+  --bg:#f5eddd;
+  --bg2:#efe4cf;
+  --card:#fffaf0;
+  --card2:#fdf3e0;
+  --ink:#3b2f24;
+  --ink2:#7a6a56;
+  --line:#e4d6bd;
+  --accent:#a54f22;
+  --accent-ink:#fff6ec;
+  --good:#48732e;
+  --bad:#a2452c;
+  --chalk-bg:#33473a;
+  --chalk-ink:#f2ead6;
+  --focus:#a54f22;
+  --font-display:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --font-body:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --font-num:Georgia,serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;line-height:1.45;
+  min-height:100vh;
+}
+/* ---- Act 2: the stores. Cool paper, ledger blue, clean sans. ---- */
+body[data-act="2"]{
+  --bg:#eef1f5;
+  --bg2:#e4e9f0;
+  --card:#ffffff;
+  --card2:#f4f7fb;
+  --ink:#1d2733;
+  --ink2:#5b6a7d;
+  --line:#dde4ec;
+  --accent:#2f5da8;
+  --accent-ink:#f4f8ff;
+  --good:#2e7d4f;
+  --bad:#b3502f;
+  --chalk-bg:#22314a;
+  --chalk-ink:#e9eef7;
+  --focus:#2f5da8;
+  --font-display:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-body:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-num:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+/* ---- Act 3: the company. Deep navy SaaS, crisp, luminous. ---- */
+body[data-act="3"]{
+  --bg:#10161f;
+  --bg2:#0b1017;
+  --card:#1a2230;
+  --card2:#212c3d;
+  --ink:#e8edf5;
+  --ink2:#8b99ad;
+  --line:#2a3547;
+  --accent:#4f8ef7;
+  --accent-ink:#0d1522;
+  --good:#4cc38a;
+  --bad:#e0704f;
+  --chalk-bg:#0b1017;
+  --chalk-ink:#e8edf5;
+  --focus:#4f8ef7;
+  --font-display:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-body:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-num:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+
+#app{max-width:var(--maxw);margin:0 auto;padding:12px 14px 90px;min-height:100vh}
+@media(min-width:900px){#app{padding-top:24px}}
+
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+
+/* ---- top bar ---- */
+.topbar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--chalk-bg);color:var(--chalk-ink);
+  border-radius:var(--radius);padding:10px 14px;margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+.topbar .brand{font-family:var(--font-display);font-weight:700;letter-spacing:.02em;font-size:1.02em;margin-right:auto}
+.topbar .stat{font-family:var(--font-num);font-size:.86em;opacity:.95;white-space:nowrap}
+.topbar .stat b{font-weight:700}
+.topbar .sub{width:100%;font-size:.78em;opacity:.75;margin-top:-2px}
+
+/* ---- cards ---- */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px;margin-bottom:12px;box-shadow:var(--shadow);
+}
+.card h2{font-family:var(--font-display);font-size:1.02em;margin-bottom:8px;letter-spacing:.01em}
+.card h2 .h-note{font-weight:400;color:var(--ink2);font-size:.85em;margin-left:6px}
+.card .sub{color:var(--ink2);font-size:.88em}
+.hr{border:0;border-top:1px solid var(--line);margin:10px 0}
+
+/* ---- kpi grid ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.kpi .k{font-size:.72em;color:var(--ink2);text-transform:uppercase;letter-spacing:.06em}
+.kpi .v{font-family:var(--font-num);font-size:1.08em;font-weight:700;margin-top:2px}
+.kpi .d{font-size:.74em;color:var(--ink2)}
+.kpi .d.up{color:var(--good)}.kpi .d.dn{color:var(--bad)}
+
+/* ---- buttons ---- */
+.btn{
+  display:inline-block;background:var(--accent);color:var(--accent-ink);
+  border-radius:10px;padding:9px 14px;font-weight:700;font-size:.95em;
+  border:1px solid transparent;text-align:center;
+}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.small{padding:5px 10px;font-size:.84em;font-weight:600}
+.btn.wide{display:block;width:100%}
+.btn.quiet{background:var(--card2);color:var(--ink);border-color:var(--line);font-weight:600}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.btnrow .btn{flex:1;min-width:130px}
+
+/* ---- menu card (the photo never changes) ---- */
+.menu-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow);
+}
+.menu-card .photo{background:linear-gradient(180deg,var(--card2),var(--card));padding:10px 0 2px}
+.menu-card .photo svg{width:172px;margin:0 auto}
+.menu-card .mtitle{
+  font-family:var(--font-display);font-weight:700;font-size:1.12em;
+  text-align:center;padding:2px 12px 0;
+}
+.menu-card .mprice{font-family:var(--font-num);text-align:center;font-size:1.05em;font-weight:700;color:var(--accent);padding:1px 0 4px}
+.menu-card .fineprint{
+  color:var(--ink2);font-size:.78em;line-height:1.5;text-align:center;
+  padding:0 18px 12px;font-style:italic;
+}
+body[data-act="3"] .menu-card .fineprint{font-style:normal}
+
+/* ---- counter feed ---- */
+.feed{list-style:none}
+.feed li{padding:7px 2px;border-bottom:1px dashed var(--line);font-size:.93em}
+.feed li:last-child{border-bottom:0}
+.feed .who{font-weight:700}
+.feed .note{color:var(--ink2)}
+.feed .delta{font-family:var(--font-num);font-size:.85em}
+.feed .delta.up{color:var(--good)}.feed .delta.dn{color:var(--bad)}
+
+/* ---- choice rows (suppliers, policies) ---- */
+.optrow{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.optrow:last-child{border-bottom:0}
+.optrow .grow{flex:1;min-width:0}
+.optrow .oname{font-weight:700;font-size:.95em}
+.optrow .odesc{color:var(--ink2);font-size:.82em;line-height:1.4}
+.optrow .ocost{font-family:var(--font-num);font-size:.88em;white-space:nowrap;text-align:right}
+.optrow.current{background:var(--card2);border-radius:10px;padding:8px;border-bottom-color:transparent}
+.tag{display:inline-block;font-size:.7em;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--ink2);vertical-align:1px}
+.tag.on{color:var(--accent);border-color:var(--accent)}
+
+/* ---- sliders ---- */
+.sliderrow{display:flex;align-items:center;gap:10px;margin:6px 0}
+.sliderrow label{font-size:.88em;min-width:86px}
+.sliderrow input[type=range]{flex:1;accent-color:var(--accent);min-height:28px}
+.sliderrow .val{font-family:var(--font-num);font-size:.88em;min-width:72px;text-align:right}
+.per-dollar{font-size:.78em;color:var(--ink2);font-family:var(--font-num);margin:2px 0 8px}
+
+/* ---- tables ---- */
+.tbl{width:100%;border-collapse:collapse;font-size:.86em}
+.tbl th{color:var(--ink2);text-transform:uppercase;font-size:.76em;letter-spacing:.05em;text-align:left;padding:5px 6px;border-bottom:1px solid var(--line)}
+.tbl td{padding:6px;border-bottom:1px dashed var(--line);font-family:var(--font-num);position:relative}
+.tbl td.t{font-family:var(--font-body)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .num{text-align:right}
+.tblwrap{overflow-x:auto}
+
+/* ---- bar chart (plain divs; battery-light) ---- */
+.chart{display:flex;align-items:flex-end;gap:2px;height:74px;padding:4px 0}
+.chart .bar{flex:1;background:var(--accent);opacity:.75;border-radius:2px 2px 0 0;min-width:2px}
+.chart .bar.b2{background:var(--ink2);opacity:.5}
+.chart-legend{display:flex;gap:14px;font-size:.76em;color:var(--ink2)}
+.chart-legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:4px}
+
+/* ---- line-ish trend (predict reveals) ---- */
+.trend{display:flex;align-items:flex-end;gap:3px;height:64px}
+.trend span{flex:1;border-radius:2px;min-width:3px}
+
+/* ---- modal ---- */
+.overlay{
+  position:fixed;inset:0;background:rgba(24,18,10,.45);
+  display:flex;align-items:center;justify-content:center;padding:16px;z-index:50;
+}
+body[data-act="3"] .overlay{background:rgba(4,8,14,.6)}
+.modal{
+  background:var(--card);color:var(--ink);border:1px solid var(--line);
+  border-radius:16px;box-shadow:0 12px 48px rgba(10,8,4,.35);
+  width:100%;max-width:480px;max-height:86vh;overflow-y:auto;padding:18px;
+}
+.modal h3{font-family:var(--font-display);font-size:1.06em;margin-bottom:4px}
+.modal .kicker{font-size:.72em;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px}
+.modal p{margin:8px 0;font-size:.94em}
+.modal .choices{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.modal .choice{
+  text-align:left;border:1px solid var(--line);border-radius:12px;padding:10px 12px;
+  background:var(--card2);width:100%;
+}
+.modal .choice .cname{font-weight:700;font-size:.95em}
+.modal .choice .cdesc{color:var(--ink2);font-size:.83em;font-family:var(--font-num);margin-top:2px}
+.modal .choice:not(:disabled):hover{border-color:var(--accent)}
+.memo{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.88em;margin:8px 0}
+.memo .mh{font-size:.72em;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:4px}
+
+/* ---- toast ---- */
+#toasts{position:fixed;left:0;right:0;bottom:12px;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:60;pointer-events:none;padding:0 14px}
+.toast{
+  background:var(--chalk-bg);color:var(--chalk-ink);border-radius:10px;padding:8px 14px;
+  font-size:.88em;box-shadow:var(--shadow);max-width:var(--maxw);
+}
+
+/* ---- sticky action bar (act 1) ---- */
+.actionbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:linear-gradient(180deg,transparent,var(--bg) 34%);
+  padding:18px 14px 14px;display:flex;justify-content:center;
+}
+.actionbar .inner{width:100%;max-width:var(--maxw);display:flex;gap:8px}
+.actionbar .btn{flex:1;padding:12px;font-size:1em}
+
+/* ---- title & endings ---- */
+.title-screen{text-align:center;padding-top:6vh}
+.title-screen .logo{font-family:var(--font-display);font-size:2em;font-weight:700;letter-spacing:.01em;margin:10px 0 2px}
+.title-screen .tagline{color:var(--ink2);font-style:italic;margin-bottom:18px}
+.title-screen svg{width:190px;margin:0 auto}
+.title-screen .menu-board{
+  display:inline-block;background:var(--chalk-bg);color:var(--chalk-ink);
+  border-radius:14px;padding:14px 26px;margin:8px 0 20px;box-shadow:var(--shadow);
+}
+.title-screen .menu-board .b1{font-family:var(--font-display);font-size:1.1em;font-weight:700}
+.title-screen .menu-board .b2{font-size:.8em;opacity:.8;font-style:italic}
+.stack{display:flex;flex-direction:column;gap:8px;max-width:300px;margin:0 auto}
+.seedline{color:var(--ink2);font-size:.78em;font-family:var(--font-num);margin-top:14px}
+
+.credits{max-width:var(--maxw);margin:0 auto;padding-top:4vh}
+.credits h1{font-family:var(--font-display);text-align:center;font-size:1.3em;margin-bottom:16px}
+.menus-compare{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:560px){.menus-compare{grid-template-columns:1fr 1fr}}
+.menus-compare .yr{font-size:.74em;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);text-align:center;margin-bottom:6px}
+
+.endcard-wrap{display:flex;justify-content:center;padding:4vh 0 2vh}
+.endcard{
+  width:min(340px,92vw);aspect-ratio:9/16.4;border-radius:26px;
+  padding:26px 22px;display:flex;flex-direction:column;
+  box-shadow:0 18px 60px rgba(8,6,2,.4);border:1px solid var(--line);
+}
+.endcard.scale{background:linear-gradient(165deg,#151d2a,#0c1119);color:#e8edf5;border-color:#2a3547}
+.endcard.local{background:linear-gradient(165deg,#fffaf0,#f3e8d2);color:#3b2f24;border-color:#e4d6bd}
+.endcard .ec-brand{font-size:.72em;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.endcard .ec-title{font-family:var(--font-display);font-weight:700;font-size:1.28em;margin:2px 0 10px}
+.endcard svg{width:110px;margin:6px auto 10px}
+.endcard .ec-lines{margin-top:auto}
+.endcard .ec-line{display:flex;justify-content:space-between;gap:10px;font-size:.85em;padding:5px 0;border-top:1px dashed currentColor;opacity:.92}
+.endcard .ec-line b{font-family:var(--font-num)}
+.endcard .ec-verify{margin-top:12px;padding:12px 10px;border-radius:12px;text-align:center;font-size:.9em}
+.endcard.scale .ec-verify{background:#1d2836}
+.endcard.local .ec-verify{background:#fff6e4}
+.endcard .ec-verify b{font-size:1.25em;font-family:var(--font-num)}
+.endcard .ec-seed{text-align:center;font-family:var(--font-num);font-size:.7em;opacity:.6;margin-top:10px}
+
+.sentence-screen{min-height:82vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.sentence-screen .the-sentence{font-family:var(--font-display);font-size:1.28em;line-height:1.5;max-width:430px}
+.sentence-screen .the-pattern{color:var(--ink2);font-size:.9em;margin-top:18px;max-width:380px}
+.sentence-screen .the-pattern b{font-style:italic}
+
+/* ---- inbox chips (act 3) ---- */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:var(--card);border:1px solid var(--accent);color:var(--accent);
+  border-radius:999px;padding:6px 12px;font-size:.84em;font-weight:700}
+
+/* ---- misc ---- */
+.center{text-align:center}
+.muted{color:var(--ink2)}
+.mono{font-family:var(--font-num)}
+.small{font-size:.84em}
+.spread{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.footer-tools{margin-top:20px;text-align:center}
+.footer-tools .btn{margin:0 4px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---- input feedback floor ---- */
+button{-webkit-tap-highlight-color:transparent}
+.btn:disabled,.choice:disabled{cursor:not-allowed}
+.choice:disabled{opacity:.5}
+input[type=range]:disabled{opacity:.45;cursor:not-allowed}
+input[type=range]:not(:disabled):hover{filter:brightness(1.12)}
+input[type=range]:not(:disabled):active{filter:brightness(.94)}
+@media(hover:hover){
+  .btn:not(:disabled):hover{filter:brightness(1.07)}
+  .btn.quiet:not(:disabled):hover,.btn.ghost:not(:disabled):hover{border-color:var(--accent);filter:none;background:var(--card2)}
+  .choice:not(:disabled):hover{border-color:var(--accent);background:var(--card)}
+  .kpi:hover{border-color:var(--line)}
+}
+.btn:not(:disabled):active{filter:brightness(.92)}
+.choice:not(:disabled):active{filter:brightness(.95)}
+
+/* the week passing */
+.btn.resolving{position:relative;overflow:hidden;opacity:.85;pointer-events:none}
+
+/* changed-number highlight (color only — safe under reduced motion) */
+.kpi,.nkv{transition:background-color .5s ease,border-color .5s ease}
+.kpi.hl{border-color:var(--accent);background:var(--card2)}
+.nkv{border-radius:4px}
+.nkv.hl{background:var(--card2);box-shadow:0 0 0 3px var(--card2)}
+
+/* the receipt (act 1) */
+.receipt{
+  background:var(--card2);border:1px dashed var(--ink2);border-radius:4px;
+  padding:10px 12px;margin-bottom:10px;font-size:.86em;
+}
+.receipt .r-head{font-size:.72em;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px;text-align:center}
+.receipt ul{list-style:none}
+.receipt li{display:flex;justify-content:space-between;gap:10px;padding:2.5px 0}
+.receipt li b{font-family:var(--font-num);white-space:nowrap}
+.receipt li .rv-up{color:var(--good)}
+.receipt li .rv-dn{color:var(--bad)}
+.receipt li.r-net{border-top:1px dashed var(--ink2);margin-top:4px;padding-top:6px;font-weight:700}
+.receipt li.r-info{color:var(--ink2);font-style:italic}
+
+/* floaters (acts 2-3) */
+.kpi{position:relative}
+.floater{
+  position:absolute;right:8px;top:2px;pointer-events:none;z-index:5;
+  font-family:var(--font-num);font-size:.76em;font-weight:700;opacity:0;
+}
+.floater.up{color:var(--good)}.floater.dn{color:var(--bad)}
+
+/* confetti + badge */
+.confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+.confetti-layer span{position:absolute;top:-4vh;width:8px;height:12px;border-radius:2px;opacity:.9}
+.badge-toast{font-weight:700}
+
+/* audio controls */
+.audioctl{display:inline-flex;align-items:center;gap:6px;margin-left:2px}
+.audioctl .volslider{width:64px;accent-color:var(--accent);min-height:24px}
+.audioctl-row{display:flex;justify-content:center;margin-top:12px}
+
+@media(prefers-reduced-motion:no-preference){
+  .modal{animation:pop .18s ease-out}
+  .toast{animation:rise .2s ease-out}
+  .ipo-fill{transition:width .5s ease}
+  .btn:not(:disabled):active{transform:translateY(1px)}
+  .btn.resolving::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+    animation:wipe .55s linear infinite;
+  }
+  .kpi.hl{animation:kpulse .45s ease-out}
+  .receipt.fresh{animation:slipin .35s ease-out}
+  .floater{animation:floatup .95s ease-out forwards}
+  .confetti-layer span{animation:confall var(--dur,1.1s) ease-in forwards}
+  @keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+  @keyframes wipe{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+  @keyframes kpulse{0%{transform:scale(1)}35%{transform:scale(1.025)}100%{transform:scale(1)}}
+  @keyframes slipin{from{transform:translateY(-8px);opacity:0}to{transform:translateY(0);opacity:1}}
+  @keyframes floatup{0%{opacity:0;transform:translateY(8px)}25%{opacity:1}100%{opacity:0;transform:translateY(-24px)}}
+  @keyframes confall{from{transform:translateY(-6vh) rotate(0deg)}to{transform:translateY(108vh) rotate(var(--rot,520deg));opacity:.2}}
+}
+@media(prefers-reduced-motion:reduce){
+  .floater{opacity:1;transition:opacity .6s ease .6s}
+}
+</style>
+</head>
+<body data-act="1">
+
+<!-- ============================================================
+     THE PRODUCT PHOTO.
+     Defined exactly once; every appearance is a <use> of this
+     symbol. It is byte-identical from the first screen to the
+     last, in every act, on both end cards.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="burger-art" viewBox="0 0 240 210">
+    <ellipse cx="120" cy="192" rx="86" ry="12" fill="#000" opacity=".10"/>
+    <!-- bottom bun -->
+    <path d="M44 158 h152 a6 6 0 0 1 6 6 v6 a22 22 0 0 1 -22 22 h-120 a22 22 0 0 1 -22 -22 v-6 a6 6 0 0 1 6 -6 z" fill="#e8a24f"/>
+    <path d="M44 158 h152 a6 6 0 0 1 6 6 v4 h-164 v-4 a6 6 0 0 1 6 -6 z" fill="#f2b76b"/>
+    <!-- patty -->
+    <rect x="34" y="132" width="172" height="28" rx="14" fill="#6d3a1f"/>
+    <rect x="34" y="132" width="172" height="10" rx="5" fill="#7d4526"/>
+    <circle cx="70" cy="150" r="2.4" fill="#5a2f18"/><circle cx="112" cy="152" r="2.4" fill="#5a2f18"/>
+    <circle cx="156" cy="149" r="2.4" fill="#5a2f18"/><circle cx="184" cy="151" r="2.4" fill="#5a2f18"/>
+    <!-- cheese -->
+    <path d="M40 124 h160 l-6 14 c-2 5 -7 8 -12 8 l-20 0 6 12 c2 4 -3 8 -7 5 l-16 -13 -93 0 c-7 0 -13 -5 -14 -12 z" fill="#f5b63d"/>
+    <path d="M40 124 h160 l-2.5 6 h-155 z" fill="#ffcb60"/>
+    <!-- tomato -->
+    <rect x="46" y="112" width="148" height="14" rx="7" fill="#d84f37"/>
+    <rect x="46" y="112" width="148" height="5" rx="2.5" fill="#e66549"/>
+    <!-- lettuce -->
+    <path d="M38 108 q6 10 14 3 q7 9 15 2 q7 9 15 2 q7 9 15 2 q7 9 15 2 q7 9 15 2 q7 9 15 2 q7 9 15 2 q8 7 14 -3 l4 -10 q-2 -10 -12 -10 l-124 0 q-10 0 -12 10 z" fill="#79b04f"/>
+    <path d="M42 98 h156 q8 0 10 8 l-176 0 q2 -8 10 -8 z" fill="#8cc161"/>
+    <!-- top bun -->
+    <path d="M120 28 c-52 0 -86 26 -86 62 a8 8 0 0 0 8 8 h156 a8 8 0 0 0 8 -8 c0 -36 -34 -62 -86 -62 z" fill="#efab55"/>
+    <path d="M120 28 c-52 0 -86 26 -86 62 h14 c0 -30 30 -52 72 -52 s72 22 72 52 h14 c0 -36 -34 -62 -86 -62 z" fill="#f7c377" opacity=".8"/>
+    <!-- sesame -->
+    <ellipse cx="88" cy="58" rx="5" ry="3.2" fill="#fbe3ae" transform="rotate(-14 88 58)"/>
+    <ellipse cx="120" cy="48" rx="5" ry="3.2" fill="#fbe3ae"/>
+    <ellipse cx="152" cy="58" rx="5" ry="3.2" fill="#fbe3ae" transform="rotate(14 152 58)"/>
+    <ellipse cx="72" cy="76" rx="5" ry="3.2" fill="#fbe3ae" transform="rotate(-22 72 76)"/>
+    <ellipse cx="104" cy="70" rx="5" ry="3.2" fill="#fbe3ae" transform="rotate(-6 104 70)"/>
+    <ellipse cx="138" cy="70" rx="5" ry="3.2" fill="#fbe3ae" transform="rotate(8 138 70)"/>
+    <ellipse cx="168" cy="78" rx="5" ry="3.2" fill="#fbe3ae" transform="rotate(24 168 78)"/>
+  </symbol>
+</svg>
+
+<div id="app"></div>
+<div id="toasts" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   CONFIG — every economy constant lives here.
+   Tune the game from this block only.
+   ============================================================ */
+const CFG = {
+  version: 3,
+  saveKey: 'sgt_save_v3',
+
+  // ---- time & pacing ----
+  act2TickMs: 2600,        // ms per simulated week in act 2
+  act3TickMs: 1700,        // ms per simulated week in act 3
+  devFFMult: 7,            // dev fast-forward speed multiplier
+  act1AutoMs: 340,         // ms per week when dev-FF auto-runs act 1
+
+  // ---- act 1: the stand ----
+  startCash: 1800,
+  startPrice: 6.50,
+  marketPrice: 6.20,       // what the burger place two streets over charges
+  baseUnitCost: 0.62,      // packaging, gas, napkins
+  rentWeekly: 210,
+  walkinBase: 118,         // anonymous walk-ins/week before modifiers
+  capacityBase: 150,       // units/week the griddle can do
+  startRegulars: 6,
+  regularVisitBase: 1.6,   // avg visits/week for a happy regular
+  convertQualityMin: 76,   // full quality needed before walk-ins start becoming regulars
+  convertChance: 0.16,     // per-week chance of +1 regular when conditions met
+  chatTrust: 5,
+  trustDriftUp: 0.7,       // weekly trust gain while quality meets expectations
+  trustDriftDown: 2.2,     // weekly trust loss while it doesn't
+  priceRaiseTrustCost: 7,  // instant trust cost per $0.25 raise
+  regularExpectation: 74,  // full-quality level regulars consider "the usual"
+
+  // demand elasticities (exponents on marketPrice/price)
+  elasticityStrangers: 1.9,
+  elasticityRegulars: 0.55,
+
+  // THE SUBSTITUTION RULE. Weights of each input into demand, by audience.
+  // For distant customers, marketing and legible quality carry everything;
+  // illegible quality carries (almost) nothing. For counter regulars it
+  // is the mirror image. This asymmetry is the whole game.
+  wStrangerLegible: 0.55,   // stranger demand swing from legible quality
+  wStrangerIllegible: 0.04, // stranger demand swing from illegible quality (word of mouth, slow)
+  wStrangerMarketing: 1.7,  // stranger demand swing from marketing reach
+  wRegularFull: 0.85,       // regular demand swing from full (mostly illegible) quality
+  wRegularMarketing: 0.02,  // regulars have already decided; ads are wallpaper
+
+  marketingHalf: 1100,      // $/wk at which marketing reaches half effect (per store)
+  marketingMin: 0, marketingMax: 6000, marketingStep: 250,
+
+  // ---- pressure cadence ----
+  inflEvery: 6,            // a cost-pressure event roughly every N weeks
+  inflAmount: 0.05,        // each pressure event raises an input cost ~5%
+
+  // ---- incidents (acute, clinical) ----
+  incidentBase: 0.0045,    // per store-week, before modifiers
+  incidentTrustHit: 18,
+  testingProgramCut: 0.62, // incident probability reduction from testing program
+  sopVarianceCut: 0.5,
+
+  // ---- act gates ----
+  expandOfferWeek: 12,     // earliest week the second-location offer can appear
+  expandCost: 2500,        // fit-out for store #2 (a loan covers the rest)
+  storeLoanWeekly: 260,    // debt service per opened store
+  act3StoreGate: 6,        // stores needed before the franchise round
+  ipoValuation: 240e6,
+
+  // ---- act 2/3 stores ----
+  storeBuildCost: 9000,
+  storeFixedWeekly: 540,   // lease + manager + crew baseline per store
+  storeWalkinBase: 390,    // strangers/week per store before modifiers
+  act3ExpandCostPerStore: 38000,
+  act3StoreWalkinBase: 420,
+  franchiseFeeShare: 0.055,
+
+  // ---- local path ----
+  localMilestones: [16, 24, 34, 46, 60, 80, 100], // regular counts that trigger arcs
+  localEndRegulars: 100,
+
+  // ---- valuation ----
+  ebitdaMultipleBase: 11,
+  ebitdaMultipleGrowth: 9,  // added multiple at strong growth
+
+  // ---- history ----
+  historyMax: 420,
+
+  // ---- feedback register ----
+  // juice = how much the game celebrates; itemization = how much it itemizes.
+  // One rises with scale, the other falls. The information never returns.
+  resolveMs: 550,                                    // act-1 "the week passes" beat
+  juice: { 1: 0.15, 2: 0.55, 3: 0.85 },              // celebration intensity by act
+  juiceScaleBonus: 0.15,                             // act 3 adds up to this as stores grow
+  itemization: { 1: 1.0, 2: 0.5, 3: 0.12 },          // feedback detail by act
+  floaterThreshold: 0.015,                           // min relative delta worth a floater
+  milestonesStores: [10, 25, 50, 100, 200],
+  milestonesVal: [50e6, 100e6, 200e6],
+  milestonesUnits: [10000, 25000, 50000, 100000],
+
+  // ---- audio ----
+  audioDefaultVol: 0.7,
+  audioPrefKey: 'sgt_audio_v1',
+};
+function juice01(){ return (CFG.juice[S ? S.act : 1] || 0.15) + (S && S.act === 3 ? Math.min(CFG.juiceScaleBonus, storeCount() / 1200) : 0); }
+function itemization01(){ return CFG.itemization[S ? S.act : 1] || 1; }
+const RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+function celebrating(){ return S && S.celebrations !== false; }
+
+/* ============================================================
+   ATTRIBUTES — the nine things a burger can be.
+   `legible: true` means an ad, a label, or a photo can carry it,
+   so distance does not erase it. Everything else can only be
+   checked from close up. Events can flip `legible` at runtime.
+   ============================================================ */
+const ATTRS = {
+  price:      { legible: true,  fixed: true },
+  photo:      { legible: true,  fixed: true, q: 84 },
+  patty: {
+    legible: false, weight: 0.24,
+    names: ['Beef patty', 'Protein input', 'SKU-114 · P-UNIT'],
+    tiers: [
+      { name: 'Hartmann Farm', a2: 'Tier A — named farm, ground twice weekly', a3: 'Spec 9.1 · single-origin',
+        cost: 1.55, q: 95, desc: 'Ground fresh Tuesdays and Fridays. Ernst Hartmann answers his own phone.', minVol: 0, maxVol: 4000 },
+      { name: 'Valley Distribution', a2: 'Tier B — regional, weekly frozen', a3: 'Spec 8.0 · regional consolidator',
+        cost: 1.20, q: 72, desc: 'Regional distributor. Frozen weekly, consistent grind.', minVol: 0, maxVol: 60000 },
+      { name: 'Comco Foods', a2: 'Tier C — national spec-match', a3: 'Spec 7.2 · lowest qualified bid',
+        cost: 0.91, q: 47, desc: 'National spec-match. Ships monthly. Meets all printed requirements.', minVol: 0, maxVol: 1e9 },
+    ],
+  },
+  produce: {
+    legible: false, weight: 0.12,
+    names: ['Lettuce & tomato', 'Produce input', 'SKU-208 · V-UNIT'],
+    tiers: [
+      { name: 'Green Fields Co-op', a2: 'Tier A — co-op, twice-weekly', a3: 'Spec 5.4 · certified regional',
+        cost: 0.86, q: 92, desc: 'Picked the day before it reaches you. Marisol runs the stall.', minVol: 0, maxVol: 6000 },
+      { name: 'City Wholesale', a2: 'Tier B — wholesale weekly', a3: 'Spec 4.8 · wholesale program',
+        cost: 0.60, q: 68, desc: 'Wholesale market run, weekly. Reliable, a little tired by Friday.', minVol: 0, maxVol: 80000 },
+      { name: 'PrimeCrop', a2: 'Tier C — national program', a3: 'Spec 4.1 · national program',
+        cost: 0.44, q: 44, desc: 'National produce program. Uniform sizing, long shelf life.', minVol: 0, maxVol: 1e9 },
+    ],
+  },
+  bun: {
+    legible: false, weight: 0.11,
+    names: ['Bun', 'Carrier input', 'SKU-301 · C-UNIT'],
+    tiers: [
+      { name: 'Almeida Bakery', a2: 'Tier A — local bakery, daily', a3: 'Spec 3.9 · artisan contract',
+        cost: 0.56, q: 93, desc: 'Baked before dawn three blocks away. Sesame on top, always.', minVol: 0, maxVol: 5000 },
+      { name: 'Bakewell Regional', a2: 'Tier B — regional, 3-day', a3: 'Spec 3.2 · regional bakery',
+        cost: 0.39, q: 69, desc: 'Regional bakery, delivered in threes. Keeps well.', minVol: 0, maxVol: 70000 },
+      { name: 'SoftLine', a2: 'Tier C — national, enriched', a3: 'Spec 2.8 · enriched national',
+        cost: 0.27, q: 45, desc: 'National enriched bun. Fourteen-day shelf life. Meets spec.', minVol: 0, maxVol: 1e9 },
+    ],
+  },
+  oil: {
+    legible: false, weight: 0.12, labelable: 'transfat',
+    names: ['Fry oil', 'Oil input', 'SKU-410 · F-MEDIUM'],
+    tiers: [
+      { name: 'Fresh-pressed blend', a2: 'Tier A — pressed blend', a3: 'Spec 6.0 · premium medium',
+        cost: 0.24, q: 90, tf: 0, desc: 'Pressed blend, changed often. Clean finish.', minVol: 0, maxVol: 1e9 },
+      { name: 'Standard shortening', a2: 'Tier B — standard shortening', a3: 'Spec 5.1 · standard medium',
+        cost: 0.12, q: 56, tf: 2, desc: 'Industry standard shortening. Stable, cheap, familiar.', minVol: 0, maxVol: 1e9 },
+      { name: 'Reformulated blend', a2: 'Tier B+ — reformulated, 0g labeled', a3: 'Spec 5.8 · reformulated medium',
+        cost: 0.17, q: 74, tf: 0, desc: 'Reformulated to remove what the new labels count.', minVol: 0, maxVol: 1e9, hidden: true },
+    ],
+  },
+  seasoning: {
+    legible: false, weight: 0.15, practice: true,
+    names: ['Seasoning', 'Flavor system', 'FLV-002 · SEASONING SYS'],
+    tiers: [
+      { name: 'The recipe card', a2: 'House blend, ground on site', a3: 'Legacy profile (manual)',
+        cost: 0.11, q: 95, desc: 'Your grandfather’s card, in his handwriting. Ground fresh each morning.' },
+      { name: 'Pre-mix sachets', a2: 'Pre-mix, portion-controlled', a3: 'Profile PM-4 (sachet)',
+        cost: 0.06, q: 66, desc: 'The blend, mixed elsewhere in batches. Very consistent.' },
+      { name: 'Default spec', a2: 'Default flavor spec', a3: 'Profile D-1 (default)',
+        cost: 0.03, q: 42, desc: 'The default profile. Nobody complains.' },
+    ],
+  },
+  handling: {
+    legible: false, weight: 0.15, practice: true,
+    names: ['Prep & handling', 'Line procedure', 'OPS-CTRL · LINE RATE'],
+    tiers: [
+      { name: 'Take the time', a2: 'Full-procedure line', a3: 'Rate profile L-1 (full)',
+        cost: 0, q: 94, cap: 0.85, desc: 'Rest the patty. Toast the bun. The line moves slower.' },
+      { name: 'Standard pace', a2: 'Standard line rate', a3: 'Rate profile L-2 (standard)',
+        cost: 0, q: 70, cap: 1.0, desc: 'The normal rhythm. Nothing skipped, nothing savored.' },
+      { name: 'Peak throughput', a2: 'Accelerated line rate', a3: 'Rate profile L-3 (peak)',
+        cost: 0, q: 46, cap: 1.22, desc: 'Everything at once. Twenty percent more covers an hour.' },
+    ],
+  },
+  kitchen: {
+    legible: false, weight: 0.11, practice: true, risky: true,
+    names: ['Kitchen routine', 'Sanitation program', 'QSF-PROG · SANITATION'],
+    tiers: [
+      { name: 'Close early Sundays', a2: 'Extended sanitation cycle', a3: 'Program S-1 (extended)',
+        cost: 52, weekly: true, q: 95, risk: 0.35, desc: 'A real deep clean, weekly, on the clock.' },
+      { name: 'Standard routine', a2: 'Standard sanitation cycle', a3: 'Program S-2 (standard)',
+        cost: 28, weekly: true, q: 71, risk: 1.0, desc: 'End-of-night wipe-downs, the usual checklist.' },
+      { name: 'Code minimum', a2: 'Minimum-code cycle', a3: 'Program S-3 (minimum)',
+        cost: 12, weekly: true, q: 45, risk: 2.1, desc: 'Exactly what the inspection sheet requires.' },
+    ],
+  },
+};
+const QUALITY_ATTRS = ['patty','produce','bun','oil','seasoning','handling','kitchen'];
+
+// Printed claims: legible add-ons. Each requires the underlying tier to back it.
+const CLAIMS = {
+  beef100:  { name: '100% Beef', legQ: 8,  req: () => true },
+  fresh:    { name: 'Fresh, Never Frozen', legQ: 14, req: s => s.tiers.patty === 0 },
+  local:    { name: 'Locally Sourced', legQ: 10, req: s => s.tiers.patty === 0 && s.tiers.produce === 0 },
+  zerotf:   { name: '0g Trans Fat', legQ: 10, req: s => ATTRS.oil.tiers[s.tiers.oil].tf === 0 },
+};
+
+/* ============================================================
+   NAMES — regulars. The first sixteen are written; the rest of
+   the hundred are assembled from the pools below.
+   ============================================================ */
+const CORE_REGULARS = [
+  { name: 'Rosa Delgado',  tag: 'crossword and black coffee, every morning', order: 'Classic, extra pickle' },
+  { name: 'Mr. Okafor',    tag: 'grades papers at the corner table', order: 'Classic, no onion' },
+  { name: 'Priya',         tag: 'runs the river loop, orders before stretching', order: 'Classic, double tomato' },
+  { name: 'Dot',           tag: 'retired mail carrier, knows everyone', order: 'Classic, cut in half' },
+  { name: 'Sam & Jo',      tag: 'night-shift nurses, always split fries', order: 'Two Classics, one shake' },
+  { name: 'Marcus',        tag: 'bassist, pays in exact change', order: 'Classic, extra sauce' },
+  { name: 'Linh',          tag: 'florist next door, trades stems for lunch', order: 'Classic, light salt' },
+  { name: 'Tobias',        tag: 'twelve, undefeated at chess, saves allowance', order: 'Classic, plain' },
+  { name: 'Coach Bell',    tag: 'brings the whole team after Saturday games', order: 'Six Classics, somehow' },
+  { name: 'Ainsley',       tag: 'writes in a green notebook, tips in poems', order: 'Classic, extra crispy' },
+  { name: 'Old Gus',       tag: 'knew your grandfather, checks your seasoning', order: 'Classic, the old way' },
+  { name: 'Fatima',        tag: 'architecture student, sketches the awning', order: 'Classic, no tomato' },
+  { name: 'Deshawn',       tag: 'bus driver on the 14, four minutes flat', order: 'Classic, to go, fast' },
+  { name: 'Nora & pup',    tag: 'orders one, shares it unevenly', order: 'Classic, patty on the side' },
+  { name: 'Emil',          tag: 'watchmaker, says the griddle keeps good time', order: 'Classic, well done' },
+  { name: 'Carmen',        tag: 'sings at the late shift, hums at lunch', order: 'Classic, extra onion' },
+];
+const NAME_POOL_FIRST = ['Ada','Ben','Chika','Daria','Eli','Farah','Goran','Hana','Ivan','June','Kofi','Lena','Milo','Naomi','Omar','Pilar','Quinn','Ravi','Sofia','Theo','Uma','Vik','Wren','Ximena','Yusuf','Zadie','Anouk','Bram','Celia','Devi','Ezra','Freya','Hugo','Ines','Jonas','Katya','Luca','Mei','Nadia','Otis','Petra','Rui','Suki','Tomas','Vera','Wallace','Yara','Zeke','Alba','Bruno','Clara','Dmitri','Elif','Felix','Greta','Hakim','Ida','Jules','Kira','Leon','Mona','Nils','Oona','Pavel','Rina','Stellan','Tessa','Ugo','Violet','Willa','Yannick','Zora','Arlo','Bea','Caspian','Delia','Enzo','Flor','Gideon','Hattie','Iris','Jasper','Kai','Lupe','Matteo','Noor','Opal','Piotr','Reyna','Silas','Tilly','Ursula','Vince','Winnie','Yolanda','Zainab'];
+const NAME_POOL_TAG = ['the Saturday cyclist','from the print shop','who reads standing up','with the tuba case','from the ferry crew','who always has a joke ready','the crossing guard','from the pottery studio','who orders for two','the early edition reader','with the yellow umbrella','from the community garden','who whistles show tunes','the model-train builder','from the tax office, surprisingly funny','who claps when the bell rings','the birdwatcher','from the night market','who collects postcards','the retired tugboat captain','with the twin toddlers','who fixes bicycles for free','the quiet chess partner for Tobias','from the radio station','who brings her own hot sauce','the substitute teacher','with the enormous headphones','from the swim club','who knits through lunch','the mural painter'];
+
+/* ============================================================
+   RNG — seeded, deterministic per run.
+   ============================================================ */
+function hashSeed(str){
+  let h = 1779033703 ^ str.length;
+  for (let i = 0; i < str.length; i++){
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return h >>> 0;
+}
+function mulberry32(a){
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+let rng = Math.random; // replaced by seeded rng at run start
+function rnd(a, b){ return a + rng() * (b - a); }
+function chance(p){ return rng() < p; }
+function pick(arr){ return arr[Math.floor(rng() * arr.length)]; }
+function makeSeed(){
+  const c = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
+  let s = 'SGT-';
+  for (let i = 0; i < 5; i++) s += c[Math.floor(Math.random() * c.length)];
+  return s;
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let S = null;        // the run
+let MEMSAVE = null;  // in-memory fallback when localStorage is unavailable
+let tickTimer = null;
+
+function newRun(seed){
+  seed = seed || makeSeed();
+  rng = mulberry32(hashSeed(seed));
+  const s = {
+    v: CFG.version,
+    seed, week: 1, act: 1, screen: 'act1',
+    cash: CFG.startCash, price: CFG.startPrice,
+    marketPrice: CFG.marketPrice,
+    costMult: {},                      // per-attr inflation multipliers
+    tiers: { patty: 0, produce: 0, bun: 0, oil: 1, seasoning: 0, handling: 0, kitchen: 1 },
+    legible: { price: true, photo: true, patty: false, produce: false, bun: false, oil: false, seasoning: false, handling: false, kitchen: false },
+    marketLegQ: {},                    // market's average quality on flipped attrs
+    claims: [],
+    marketing: 0,
+    debtWeekly: 0,
+    regulars: [], nextRegularIdx: 0,
+    walkins: CFG.walkinBase,
+    upgrades: {},                      // griddle, awning, apprentice, specials...
+    stores: [],                        // act 2 store rows
+    storeCount: 1,
+    lastWeek: null,                    // last week's resolution, for the recap
+    feed: [],                          // counter feed lines
+    fired: {},                         // events already run
+    queue: [],                         // pending event ids
+    modal: null,
+    predicts: {},                      // recorded guesses
+    history: [],                       // weekly {units, cash, legQ, illQ, regs}
+    committedScale: false, committedLocal: false,
+    localArc: 0,
+    sop: 0, testing: 0, sponsored: false,
+    alloc: { expand: 40, marketing: 35, ops: 25 },   // act 3 free-cash-flow split (%)
+    valuation: 0,
+    franchised: false,
+    ended: null, endless: false,
+    devFF: false,
+    trimsSinceVisit: {},               // attrs trimmed since each regular last noticed
+    turnedAway: 0,
+    paused: false,
+    rentMult: 1, envMult: 1,
+    nextPressure: 5, nextExpand: CFG.expandOfferWeek, nextFranchise: 0,
+    pressureIdx: 0, brand: 62,
+    marketTarget: {},
+    act2StartWeek: 0, act3StartWeek: 0, flipWeek: 0, lawWeek: 0,
+    expandPool: 0, opsPool: 0,
+    hadIncident: false,
+    finePrintY1: null,
+  };
+  QUALITY_ATTRS.forEach(a => { s.costMult[a] = 1; });
+  for (let i = 0; i < CFG.startRegulars; i++) s.regulars.push(makeRegular(s));
+  return s;
+}
+function makeRegular(s){
+  let def;
+  if (s.nextRegularIdx < CORE_REGULARS.length){
+    def = CORE_REGULARS[s.nextRegularIdx];
+  } else {
+    const first = NAME_POOL_FIRST[(s.nextRegularIdx - CORE_REGULARS.length) % NAME_POOL_FIRST.length];
+    def = { name: first, tag: pick(NAME_POOL_TAG), order: pick(['Classic','Classic, extra pickle','Classic, no onion','Classic, well done','Classic, to go','Classic, extra sauce']) };
+  }
+  s.nextRegularIdx++;
+  return { id: s.nextRegularIdx, name: def.name, tag: def.tag, order: def.order,
+           trust: Math.round(rnd(52, 68)), visits: 0, weeksIn: 0 };
+}
+
+/* ---- save / load ---- */
+function save(){
+  if (!S) return;
+  const data = JSON.stringify(S);
+  try { localStorage.setItem(CFG.saveKey, data); }
+  catch (e) { MEMSAVE = data; }
+}
+function loadSave(){
+  let data = null;
+  try { data = localStorage.getItem(CFG.saveKey); } catch (e) { data = MEMSAVE; }
+  if (!data) return null;
+  try {
+    const s = JSON.parse(data);
+    if (s.v !== CFG.version) return null;
+    return s;
+  } catch (e) { return null; }
+}
+function clearSave(){
+  try { localStorage.removeItem(CFG.saveKey); } catch (e) {}
+  MEMSAVE = null;
+}
+
+/* ---- formatting ---- */
+function fm$(n){
+  const neg = n < 0; n = Math.abs(n);
+  let out;
+  if (n >= 1e9) out = '$' + (n / 1e9).toFixed(2) + 'B';
+  else if (n >= 1e6) out = '$' + (n / 1e6).toFixed(1) + 'M';
+  else if (n >= 100000) out = '$' + Math.round(n / 1000) + 'k';
+  else if (n < 100 && n % 1 !== 0) out = '$' + n.toFixed(2);
+  else out = '$' + Math.round(n).toLocaleString('en-US');
+  return neg ? '−' + out : out;
+}
+function fmN(n){
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 10000) return Math.round(n / 1000) + 'k';
+  return Math.round(n).toLocaleString('en-US');
+}
+function esc(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function weekLabel(w){ const y = Math.floor((w - 1) / 52) + 1; const ww = ((w - 1) % 52) + 1; return 'Year ' + y + ' · Week ' + ww; }
+
+/* ============================================================
+   MODEL — quality, legibility, demand.
+   ============================================================ */
+function tierOf(a){ return ATTRS[a].tiers[S.tiers[a]]; }
+function attrQ(a){ return tierOf(a).q; }
+function attrName(a){ return ATTRS[a].names[Math.min(S.act, 3) - 1]; }
+function tierLabel(a, i){
+  const t = ATTRS[a].tiers[i];
+  return S.act === 1 ? t.name : (S.act === 2 ? t.a2 : t.a3);
+}
+
+// Full quality: what someone standing at the counter can check. All of it.
+function fullQuality(){
+  let q = 0, w = 0;
+  QUALITY_ATTRS.forEach(a => { q += attrQ(a) * ATTRS[a].weight; w += ATTRS[a].weight; });
+  return q / w;
+}
+// Illegible quality: the part distance erases.
+function illegibleQuality(){
+  let q = 0, w = 0;
+  QUALITY_ATTRS.forEach(a => {
+    if (!S.legible[a]){ q += attrQ(a) * ATTRS[a].weight; w += ATTRS[a].weight; }
+  });
+  return w > 0 ? q / w : 70;
+}
+// Legible score: what an ad, a label, or a badge can carry. Claims add to it;
+// once an attribute flips legible, your real quality on it counts — relative
+// to what the rest of the market prints.
+function legibleScore(){
+  let score = 55;
+  S.claims.forEach(c => { if (CLAIMS[c] && CLAIMS[c].req(S)) score += CLAIMS[c].legQ; });
+  QUALITY_ATTRS.forEach(a => {
+    if (S.legible[a]){
+      const mkt = S.marketLegQ[a] != null ? S.marketLegQ[a] : 60;
+      score += Math.max(-18, Math.min(18, (attrQ(a) - mkt) * 0.45));
+    }
+  });
+  return Math.max(0, Math.min(100, score));
+}
+function verifiableCount(){
+  // attributes the current majority customer can check
+  if (S.act === 1) return 9;                       // price, photo, and all seven — you are at the counter
+  let n = 2;                                       // price, photo
+  QUALITY_ATTRS.forEach(a => { if (S.legible[a]) n++; });
+  return n;
+}
+function lin(w, x01){ return 1 + w * (x01 - 0.5); }
+
+/* ---- costs ---- */
+function unitCost(){
+  let c = CFG.baseUnitCost;
+  QUALITY_ATTRS.forEach(a => {
+    const t = tierOf(a);
+    if (!t.weekly) c += t.cost * S.costMult[a];
+  });
+  return c;
+}
+function weeklyFixedPerStore(){
+  let f = (S.act === 1 ? CFG.rentWeekly : CFG.storeFixedWeekly) * S.rentMult;
+  const k = tierOf('kitchen');
+  f += k.cost * S.costMult.kitchen;
+  return f;
+}
+function capacity(){
+  let cap = CFG.capacityBase * tierOf('handling').cap;
+  if (S.upgrades.griddle) cap *= 1.5;
+  if (S.upgrades.griddle2) cap *= 1.35;
+  if (S.upgrades.apprentice) cap *= 1.4;
+  return cap;
+}
+
+/* ---- demand: the two audiences ---- */
+function marketing01(spendPerStore){
+  return spendPerStore / (spendPerStore + CFG.marketingHalf);
+}
+function brandFactor(){
+  const b = S.brand != null ? S.brand : 62;
+  return 0.72 + 0.56 * (b / 100);
+}
+// Strangers: bandwidth = legible only. This is the substitution rule in code:
+// wStrangerMarketing dwarfs wStrangerIllegible.
+function strangerDemandPerStore(spendPerStore, baseOverride){
+  const base = baseOverride != null ? baseOverride : (S.act === 1 ? S.walkins : (S.act === 2 ? CFG.storeWalkinBase : CFG.act3StoreWalkinBase));
+  const priceF = Math.pow(S.marketPrice / S.price, CFG.elasticityStrangers);
+  const legF = lin(CFG.wStrangerLegible, legibleScore() / 100);
+  const illF = lin(CFG.wStrangerIllegible, illegibleQuality() / 100);
+  const mktF = 1 + CFG.wStrangerMarketing * marketing01(spendPerStore);
+  return base * priceF * legF * illF * mktF * brandFactor();
+}
+// Regulars: bandwidth = everything. Marketing is wallpaper to them.
+function fairPrice(){
+  return S.marketPrice * (0.60 + 0.72 * (fullQuality() / 100));
+}
+function regularVisitRate(reg){
+  const qF = lin(CFG.wRegularFull, fullQuality() / 100);
+  const priceF = Math.pow(Math.max(0.5, Math.min(1.35, fairPrice() / S.price)), CFG.elasticityRegulars);
+  const trustF = Math.pow(Math.max(10, reg.trust) / 70, 0.8);
+  const mktF = 1 + CFG.wRegularMarketing * marketing01(S.marketing);
+  return CFG.regularVisitBase * qF * priceF * trustF * mktF;
+}
+
+// The spreadsheet the player sees: estimated distant customers per extra
+// $1,000/wk of TOTAL spend — the same dollars the slider and the P&L use.
+function perThousand(kind){
+  const n = storeCount();
+  const spend = S.act === 1 ? 0 : S.marketing / Math.max(1, n);
+  const now = strangerDemandPerStore(spend);
+  if (kind === 'marketing'){
+    return (strangerDemandPerStore(spend + 1000 / n) - now) * n;
+  }
+  return 0;
+}
+function storeCount(){ return S.act === 1 ? 1 : Math.max(1, S.storeCount); }
+
+/* ============================================================
+   WEEKLY RESOLUTION — act 1 (the stand)
+   ============================================================ */
+function resolveWeekAct1(){
+  const lines = [];
+  const uc = Math.round(unitCost() * 100) / 100, cap = capacity(); // cents, so the receipt reproduces itself
+
+  // regulars come by
+  let regularUnits = 0, visitors = [];
+  S.regulars.forEach(reg => {
+    reg.weeksIn++;
+    const rate = regularVisitRate(reg);
+    let v = Math.floor(rate) + (chance(rate % 1) ? 1 : 0);
+    if (v > 0){ visitors.push(reg); reg.visits += v; regularUnits += v; }
+  });
+
+  // strangers walk in
+  let strangerUnits = strangerDemandPerStore(0) * rnd(0.92, 1.08);
+  let demand = regularUnits + strangerUnits;
+  let served = Math.round(Math.min(demand, cap)); // whole burgers — the receipt's math is the real math
+  S.turnedAway = Math.max(0, Math.round(demand - cap));
+  if (S.turnedAway > 3) lines.push({ note: 'The line ran long — about ' + S.turnedAway + ' people gave up waiting this week.' });
+
+  // money
+  const revenue = served * S.price;
+  const specials = S.upgrades.specials ? 0.35 * served * 0.2 : 0; // special adds a small attach
+  const cogs = served * uc;
+  const fixed = weeklyFixedPerStore() + S.debtWeekly + (S.upgrades.apprentice ? 260 : 0);
+  const net = revenue + specials - cogs - fixed;
+  S.cash += net;
+
+  // trust drift + noticing
+  const fq = fullQuality(), fair = fairPrice();
+  S.regulars.forEach(reg => {
+    const visited = visitors.includes(reg);
+    if (fq >= CFG.regularExpectation && S.price <= fair * 1.06){
+      reg.trust = Math.min(100, reg.trust + CFG.trustDriftUp);
+    } else if (fq < CFG.regularExpectation - 4 || S.price > fair * 1.12){
+      reg.trust = Math.max(5, reg.trust - CFG.trustDriftDown);
+    }
+    if (visited && reg.trust > 55 && chance(0.5)){
+      const noticed = Object.keys(S.trimsSinceVisit)[0];
+      if (noticed){
+        delete S.trimsSinceVisit[noticed];
+        reg.trust = Math.max(5, reg.trust - 3);
+        lines.push({ who: reg.name, note: pick(NOTICE_LINES)(attrName(noticed).toLowerCase()), delta: '−trust' });
+      } else if (chance(0.3)){
+        lines.push({ who: reg.name, note: pick(fq >= 82 ? WARM_LINES : NEUTRAL_LINES) });
+      }
+    }
+  });
+
+  // strangers become regulars — faster once the corner has real pull
+  if (fq >= CFG.convertQualityMin && S.turnedAway < 8 && S.regulars.length < 120){
+    let expect = CFG.convertChance + strangerUnits * 0.006;
+    expect *= (fq - CFG.convertQualityMin + 6) / 20;
+    if (S.upgrades.specials) expect *= 1.5;
+    if (S.upgrades.awning) expect *= 1.2;
+    let converts = Math.floor(expect) + (chance(expect % 1) ? 1 : 0);
+    converts = Math.min(3, converts);
+    for (let i = 0; i < converts; i++){
+      const reg = makeRegular(S);
+      S.regulars.push(reg);
+      if (i === 0) lines.push({ who: reg.name, note: 'ordered three times this week, then introduced ' + (reg.name.includes('&') ? 'themselves' : 'themself') + ' — ' + reg.tag + '.', delta: '+regular' });
+      else lines.push({ who: reg.name, note: 'is a face you know now — ' + reg.tag + '.', delta: '+regular' });
+    }
+  }
+
+  // the receipt: every dollar named, every name a person or a supplier
+  const rentNow = CFG.rentWeekly * S.rentMult;
+  const kitchenNow = tierOf('kitchen').cost * S.costMult.kitchen;
+  const receipt = [];
+  receipt.push({ t: 'Sold ' + Math.round(served) + ' burgers at ' + '$' + S.price.toFixed(2), v: revenue });
+  if (specials > 0) receipt.push({ t: 'Maya’s special, on the side', v: specials });
+  receipt.push({ t: 'Ingredients — ' + tierOf('patty').name + ' & co. (' + Math.round(served) + ' × $' + uc.toFixed(2) + ')', v: -cogs });
+  receipt.push({ t: 'Rent' + (S.rentMult > 1.001 ? ' (the new number)' : '') + ' — Marlowe’s office', v: -rentNow });
+  receipt.push({ t: tierOf('kitchen').name, v: -kitchenNow });
+  if (S.upgrades.apprentice) receipt.push({ t: 'Maya’s wages', v: -260 });
+  if (S.debtWeekly > 0) receipt.push({ t: 'The note', v: -S.debtWeekly });
+  if (S.prevUC != null && Math.abs(uc - S.prevUC) > 0.005){
+    receipt.push({ t: 'One burger now costs $' + uc.toFixed(2) + ' to make (was $' + S.prevUC.toFixed(2) + ')', info: true });
+  }
+  receipt.push({ t: 'The week, all told', v: net, net: true });
+  S.prevUC = uc;
+
+  S.lastWeek = {
+    week: S.week, units: Math.round(served), regularUnits: Math.round(regularUnits),
+    strangerUnits: Math.round(strangerUnits), revenue, net, uc, fixed, receipt,
+  };
+  S.feed = lines.slice(0, 7);
+  pushHistory(served);
+  S.week++;
+  runEventChecks();
+}
+
+/* ============================================================
+   WEEKLY RESOLUTION — acts 2 & 3 (stores, then the company)
+   ============================================================ */
+function resolveWeekScale(){
+  const n = storeCount();
+  const spendPer = S.marketing / n;
+  const uc = unitCost();
+  let units = 0, loyalUnits = 0;
+
+  const fq = fullQuality();
+  const retention = Math.max(0.30, Math.min(0.92,
+    0.52 + (fq - 70) * 0.004 + S.sop * 0.045 - Math.max(0, S.price - S.marketPrice) * 0.02));
+
+  S.stores.forEach(st => {
+    st.prev = st.units || 0;
+    const strangers = strangerDemandPerStore(spendPer, (S.act === 2 ? CFG.storeWalkinBase : CFG.act3StoreWalkinBase) * st.f * S.envMult) * rnd(0.95, 1.05);
+    st.loyal = (st.loyal || 40) * retention + strangers * 0.22;
+    const lu = st.loyal * 0.85;
+    st.units = Math.round(strangers + lu);
+    units += st.units; loyalUnits += lu;
+  });
+
+  const revenue = units * S.price;
+  const cogs = units * uc;
+  const fixed = n * weeklyFixedPerStore() + S.debtWeekly + S.marketing + (S.sponsored ? revenue * 0.003 : 0);
+  let net = revenue - cogs - fixed;
+  if (S.franchised) net += revenue * CFG.franchiseFeeShare * 0.4;
+
+  // act 3: free cash flow is allocated automatically — the idle engine
+  if (S.act === 3 && net > 0){
+    const ex = net * S.alloc.expand / 100;
+    S.expandPool = (S.expandPool || 0) + ex;
+    const per = CFG.act3ExpandCostPerStore;
+    while (S.expandPool >= per && S.storeCount < 4000){
+      S.expandPool -= per; addStore();
+    }
+    const mkTarget = Math.min(CFG.marketingMax * n, (net * S.alloc.marketing / 100) * 4);
+    S.marketing = Math.round(S.marketing * 0.9 + mkTarget * 0.1);
+    const ops = net * S.alloc.ops / 100;
+    S.opsPool = (S.opsPool || 0) + ops;
+    if (S.opsPool > 60000 && S.sop < 3){ S.opsPool -= 60000; S.sop++; toast('Operations: SOP program level ' + S.sop + ' rolled out systemwide.'); }
+    else if (S.opsPool > 90000 && S.testing < 2){ S.opsPool -= 90000; S.testing++; toast('Operations: testing program expanded to level ' + S.testing + '.'); }
+    S.cash += net - ex - Math.min(net * S.alloc.ops / 100, ops);
+  } else {
+    S.cash += net;
+  }
+
+  // brand trust drifts home
+  if (S.brand == null) S.brand = 62;
+  S.brand = Math.min(100, S.brand + 0.55);
+
+  // the sponsored standard reshapes the field: fixed costs thin the small end
+  // of the market, and their customers go somewhere with a certified seal
+  if (S.sponsored && S.week - (S.sponsoredWeek || 0) < 40){
+    S.envMult = Math.min(1.4, S.envMult * 1.011);
+  }
+
+  // (reference price moves with the same cost pressure everyone faces — see applyPressure)
+
+  // market catches up on flipped attributes (the arms race / elimination engine)
+  QUALITY_ATTRS.forEach(a => {
+    if (S.legible[a] && S.marketTarget && S.marketTarget[a] != null){
+      const cur = S.marketLegQ[a] != null ? S.marketLegQ[a] : 60;
+      S.marketLegQ[a] = cur + (S.marketTarget[a] - cur) * 0.06;
+    }
+  });
+
+  // incidents: illegible failure, briefly legible
+  const risk = tierOf('kitchen').risk * (tierOf('handling').q < 60 ? 1.5 : 1.0);
+  const p = CFG.incidentBase * n * risk * (1 - CFG.testingProgramCut * Math.min(1, S.testing / 2)) * (S.sop ? CFG.sopVarianceCut : 1);
+  if (chance(Math.min(0.06, p)) && !S.modal && S.week - (S.lastIncidentWk || 0) >= 8){
+    S.lastIncidentWk = S.week;
+    fireIncident();
+  }
+
+  // valuation
+  const weeklyEbitda = net + S.marketing * 0.35; // marketing is discretionary; the bank adds some back
+  const growth = S.history.length > 12 ? Math.max(0, Math.min(1, (units / Math.max(1, S.history[S.history.length - 12].units) - 1) * 2.2)) : 0.3;
+  S.valuation = Math.max(0, weeklyEbitda * 52 * (CFG.ebitdaMultipleBase + CFG.ebitdaMultipleGrowth * growth));
+
+  // feedback deltas: itemized-ish in act 2, aggregates only in act 3
+  S.fx = S.fx || {};
+  S.fx.floaters = S.fx.floaters || [];
+  const prevUnits = S.lastWeek ? S.lastWeek.units : units;
+  const dU = units - prevUnits;
+  if (Math.abs(dU) / Math.max(prevUnits, 1) > CFG.floaterThreshold){
+    S.fx.floaters.push({ key: 'units', text: (dU > 0 ? '+' : '−') + fmN(Math.abs(dU)), dir: dU > 0 ? 'up' : 'dn' });
+  }
+  const prevNet = S.lastWeek ? S.lastWeek.net : net;
+  const dN = net - prevNet;
+  if (Math.abs(dN) / Math.max(Math.abs(prevNet), 100) > CFG.floaterThreshold * 2){
+    S.fx.floaters.push({ key: 'net', text: (dN > 0 ? '+' : '−') + fm$(Math.abs(dN)), dir: dN > 0 ? 'up' : 'dn' });
+  }
+  if (S.act === 2 && itemization01() > 0.3){
+    // partial itemization: the two stores that moved most
+    const movers = S.stores.slice().sort((a, b) => Math.abs(b.units - b.prev) - Math.abs(a.units - a.prev)).slice(0, 2);
+    movers.forEach(st => {
+      const d = st.units - st.prev;
+      if (Math.abs(d) / Math.max(st.prev, 1) > CFG.floaterThreshold * 2){
+        S.fx.floaters.push({ key: 'st' + st.id, text: (d > 0 ? '+' : '−') + Math.abs(d), dir: d > 0 ? 'up' : 'dn' });
+      }
+    });
+    // and, now and then, a delta worth saying out loud
+    const top = movers[0];
+    if (top && S.week >= (S.nextStoreToast || 0)){
+      const d = top.units - top.prev;
+      if (Math.abs(d) / Math.max(top.prev, 1) > 0.08){
+        S.nextStoreToast = S.week + 6;
+        toast('Store #' + top.id + ': ' + (d > 0 ? '+' : '−') + Math.abs(d) + ' units this week.');
+      }
+    }
+  }
+  // milestones: aggregates celebrate themselves
+  const msCandidates = [];
+  CFG.milestonesStores.forEach(v => { if (storeCount() >= v) msCandidates.push(['st' + v, fmN(v) + ' locations']); });
+  CFG.milestonesUnits.forEach(v => { if (units >= v) msCandidates.push(['u' + v, fmN(v) + ' burgers a week']); });
+  CFG.milestonesVal.forEach(v => { if ((S.valuation || 0) >= v) msCandidates.push(['val' + v, fm$(v) + ' valuation']); });
+  for (const cand of msCandidates){
+    if (!S.fired['ms_' + cand[0]]){
+      S.fired['ms_' + cand[0]] = true;
+      (S.fx.parties = S.fx.parties || []).push({ label: cand[1] });
+      break;
+    }
+  }
+
+  S.lastWeek = { week: S.week, units, revenue, net, uc, fixed, loyalUnits: Math.round(loyalUnits), retention };
+  pushHistory(units);
+  S.week++;
+  runEventChecks();
+}
+
+function addStore(){
+  S.storeCount++;
+  S.stores.push({ id: S.storeCount, f: rnd(0.82, 1.16), loyal: 30, units: 0 });
+}
+function pushHistory(units){
+  S.history.push({
+    w: S.week, units: Math.round(units), cash: Math.round(S.cash),
+    legQ: Math.round(legibleScore()), illQ: Math.round(illegibleQuality()),
+    regs: S.regulars.length, stores: storeCount(), val: Math.round(S.valuation || 0),
+  });
+  if (S.history.length > CFG.historyMax) S.history.splice(0, S.history.length - CFG.historyMax);
+}
+
+/* ---- flavor line pools (act 1 counter feed) ---- */
+const WARM_LINES = [
+  'said it tastes like the first one ever did.',
+  'brought a friend “to show them the real thing.”',
+  'left a tip in the jar shaped like a compliment.',
+  'said Sundays start here now.',
+  'asked what you do differently. You said: time.',
+  'nodded once, slowly. High praise.',
+];
+const NEUTRAL_LINES = [
+  'ate quickly and waved on the way out.',
+  'asked how your week was going. Meant it.',
+  'read the whole paper over one burger.',
+  'complimented the weather, then the pickles.',
+];
+const NOTICE_LINES = [
+  x => 'paused mid-bite. “Something new with the ' + x + '?”',
+  x => 'asked, gently, whether the ' + x + ' changed.',
+  x => 'didn’t finish. Looked at the ' + x + ' a moment.',
+  x => 'said it was fine. The word “fine” did some work.',
+];
+
+/* ============================================================
+   EVENTS — pressure, arcs, flips, memos, gates.
+   ============================================================ */
+function runEventChecks(){
+  // recurring cost pressure
+  if (S.week >= S.nextPressure && (!S.ended || S.endless)){
+    S.nextPressure = S.week + CFG.inflEvery + Math.floor(rnd(0, 3));
+    queueDynamic(makePressure());
+  }
+  // a rough patch: Marlowe floats a bridge note before the stand goes under
+  if (S.act === 1 && S.cash < -900 && (S.bridgeNotes || 0) < 2 && !S.ended){
+    S.bridgeNotes = (S.bridgeNotes || 0) + 1;
+    S.cash += 1600; S.debtWeekly += 70;
+    toast('Marlowe covers the gap with a bridge note: +' + fm$(1600) + ', ' + fm$(70) + '/wk. “Pay me in burgers if you have to.”');
+  }
+  // recurring expansion offer (until the player settles in)
+  if (S.act === 1 && !S.committedLocal && !S.committedScale &&
+      S.week >= S.nextExpand && S.cash >= CFG.expandCost && !S.ended){
+    S.nextExpand = S.week + 7;
+    queueDynamic({ id: 'expandOffer' });
+  }
+  // local milestones
+  if (S.act === 1 && S.localArc < LOCAL_ARCS.length &&
+      S.regulars.length >= CFG.localMilestones[S.localArc] &&
+      S.week >= (S.arc6Wait || 0)){
+    const id = 'localArc' + S.localArc;
+    S.localArc++;
+    queueEvent(id);
+  }
+  // scripted events
+  EVENT_ORDER.forEach(id => {
+    const ev = EVENTS[id];
+    if (!S.fired[id] && ev.when && ev.when(S)){ queueEvent(id); }
+  });
+  checkVolumeThresholds();
+  pumpQueue();
+}
+function queueEvent(id){ if (!S.fired[id]){ S.fired[id] = true; S.queue.push({ id }); } }
+function queueDynamic(payload){ S.queue.push(payload); }
+function pumpQueue(){
+  if (!S.modal && S.queue.length){ S.modal = S.queue.shift(); }
+}
+function closeModal(){
+  S.modal = null;
+  pumpQueue();
+  save(); render();
+}
+
+/* ---- cost pressure: the two levers, priced honestly ---- */
+const PRESSURE_TARGETS = ['patty', 'fixed', 'produce', 'oil', 'bun', 'market'];
+function makePressure(){
+  const t = PRESSURE_TARGETS[(S.pressureIdx = ((S.pressureIdx || 0) + 1)) % PRESSURE_TARGETS.length];
+  return { id: 'pressure', target: t };
+}
+function pressureCopy(t){
+  const a1 = S.act === 1;
+  switch (t){
+    case 'patty': return a1 ? 'Beef is up across the market. ' + tierOf('patty').name + ' has to pass along ' + Math.round(CFG.inflAmount * 100) + '%.' : 'Protein input costs up ' + Math.round(CFG.inflAmount * 100) + '% at current tier, effective immediately.';
+    case 'produce': return a1 ? 'A dry month upstream. Produce costs rise ' + Math.round(CFG.inflAmount * 100) + '%.' : 'Produce input +' + Math.round(CFG.inflAmount * 100) + '% on seasonal contract reset.';
+    case 'bun': return a1 ? 'Flour is up. The bakery is apologetic but firm: +' + Math.round(CFG.inflAmount * 100) + '%.' : 'Carrier input +' + Math.round(CFG.inflAmount * 100) + '% on renewal.';
+    case 'oil': return a1 ? 'Oil prices tick up ' + Math.round(CFG.inflAmount * 100) + '% this quarter.' : 'Fry-medium contract +' + Math.round(CFG.inflAmount * 100) + '%.';
+    case 'fixed': return a1 ? 'The landlord sends a friendly note: rent is going up 6%.' : 'Lease escalators and wage floors: fixed costs +6% per location.';
+    case 'market': return a1 ? 'Patty Palace, two streets over, drops their price to ' + fm$(S.marketPrice - 0.2) + '. The street notices.' : 'The category leader cuts list price. Reference price now ' + fm$(S.marketPrice - 0.2) + '.';
+  }
+}
+function applyPressure(t){
+  if (t === 'fixed'){ S.rentMult *= 1.06; }
+  else if (t === 'market'){ S.marketPrice = Math.max(3.9, S.marketPrice - 0.2); return; }
+  else { S.costMult[t] *= (1 + CFG.inflAmount); }
+  // the rest of the market eats the same increase and passes most of it through
+  S.marketPrice *= (1 + CFG.inflAmount * 0.5);
+}
+// best available trim: next tier down on the attribute saving the most per week
+function bestTrim(){
+  const vol = S.lastWeek ? Math.max(40, S.lastWeek.units) : 110;
+  let best = null;
+  QUALITY_ATTRS.forEach(a => {
+    if (S.legible[a]) return; // once it's on the label, cutting it costs distant sales — no longer a quiet trim
+    const i = S.tiers[a], tiers = ATTRS[a].tiers;
+    for (let j = i + 1; j < tiers.length; j++){
+      if (tiers[j].hidden && !S.oilReformAvailable) continue;
+      if (tiers[j].weekly !== tiers[i].weekly) continue;
+      const save_ = (tiers[i].cost - tiers[j].cost) * S.costMult[a];
+      const weeklySave = tiers[j].weekly ? save_ : save_ * vol;
+      if (save_ > 0 && (!best || weeklySave > best.weeklySave)){
+        best = { attr: a, to: j, save: save_, weeklySave, weekly: !!tiers[j].weekly };
+      }
+      break;
+    }
+  });
+  return best;
+}
+function demandDeltaForPrice(newPrice){
+  const old = S.price;
+  const spendPer = S.act === 1 ? 0 : S.marketing / storeCount();
+  const s0 = strangerDemandPerStore(spendPer);
+  const r0 = S.regulars.reduce((t, r) => t + regularVisitRate(r), 0);
+  S.price = newPrice;
+  const s1 = strangerDemandPerStore(spendPer);
+  const r1 = S.regulars.reduce((t, r) => t + regularVisitRate(r), 0);
+  S.price = old;
+  return { strangers: s0 > 0 ? (s1 / s0 - 1) : 0, regulars: r0 > 0 ? (r1 / r0 - 1) : 0 };
+}
+function pressureModal(m){
+  const t = m.target;
+  const trim = bestTrim();
+  m.trim = trim;
+  const d = demandDeltaForPrice(S.price + 0.25);
+  const choices = [];
+  choices.push({ id: 'price', name: 'Raise the price to ' + fm$(S.price + 0.25),
+    desc: S.act === 1
+      ? 'Counter demand est. ' + pct(d.regulars) + ' · walk-ins est. ' + pct(d.strangers)
+      : 'Loyalty cohort est. ' + pct(d.regulars || -0.02) + ' · acquisition est. ' + pct(d.strangers) });
+  if (trim){
+    const savePct = trim.weekly ? '' : ' (−' + Math.round(trim.save / unitCost() * 100) + '% of unit cost)';
+    const dq = (ATTRS[trim.attr].tiers[S.tiers[trim.attr]].q - ATTRS[trim.attr].tiers[trim.to].q) * ATTRS[trim.attr].weight;
+    const dRet = (dq * 0.004 * 100).toFixed(1);
+    choices.push({ id: 'trim', name: 'Switch ' + attrName(trim.attr).toLowerCase() + ' → ' + tierLabel(trim.attr, trim.to),
+      desc: (trim.weekly ? '−' + fm$(trim.save) + '/wk' : '−' + fm$(trim.save) + '/unit' + savePct)
+        + ' · identical on all printed attributes'
+        + (S.act === 1 ? ' · people at the counter may notice' : ' · retention impact est. −' + dRet + '%') });
+  }
+  choices.push({ id: 'absorb', name: 'Absorb it', desc: 'Margins thin. Everything else stays exactly as it is.' });
+  return {
+    kicker: S.act === 1 ? 'The week’s mail' : 'Cost report',
+    title: S.act === 1 ? 'Costs are moving' : 'Input cost variance',
+    body: '<p>' + esc(pressureCopy(t)) + '</p>',
+    choices,
+  };
+}
+function pct(x){ return (x >= 0 ? '+' : '−') + Math.abs(Math.round(x * 100)) + '%'; }
+function resolvePressure(m, choiceId){
+  applyPressure(m.target);
+  if (choiceId === 'price'){
+    S.price = Math.round((S.price + 0.25) * 100) / 100;
+    const overFair = S.price > fairPrice();
+    S.regulars.forEach(r => { r.trust = Math.max(5, r.trust - CFG.priceRaiseTrustCost * (overFair ? 1 : 0.45)); });
+    toast('Price is now ' + fm$(S.price) + '.');
+  } else if (choiceId === 'trim'){
+    const trim = m.trim;
+    if (trim){
+      setTier(trim.attr, trim.to, true);
+      toast(attrName(trim.attr) + ' switched. Unit economics updated.');
+    }
+  }
+  // absorb: costs just went up; nothing else changes
+}
+
+/* ---- tier switching (shared by pressure + procurement UI) ---- */
+function setTier(attr, idx, silent){
+  const from = S.tiers[attr];
+  if (from === idx) return;
+  S.tiers[attr] = idx;
+  const down = ATTRS[attr].tiers[idx].q < ATTRS[attr].tiers[from].q;
+  if (down){ S.trimsSinceVisit[attr] = true; }
+  else { delete S.trimsSinceVisit[attr]; } // restored before anyone tasted it
+  if (!silent) toast(attrName(attr) + ': ' + tierLabel(attr, idx) + '.');
+}
+
+/* ---- incidents: clinical ---- */
+function fireIncident(){
+  const storeNo = Math.floor(rnd(1, storeCount() + 1));
+  const cat = tierOf('kitchen').risk >= tierOf('handling').q / 60 ? 'sanitation cycle' : 'handling procedure';
+  // one store's bad day dilutes across a national brand
+  const hit = Math.max(5, Math.round(CFG.incidentTrustHit / Math.sqrt(Math.max(1, storeCount() / 6))));
+  S.brand = Math.max(18, (S.brand || 62) - hit);
+  queueDynamic({ id: 'incident', storeNo, cat, hit, days: Math.floor(rnd(1, 4)) });
+  pumpQueue();
+}
+function incidentModal(m){
+  const saturated = S.testing >= 2;
+  const broke = S.cash < 40000;
+  const action = saturated
+    ? { id: 'audit', name: 'Commission an external audit', desc: fm$(40000) + ' one-time · brand trust +4 · testing already at full coverage', disabled: broke }
+    : { id: 'testing', name: 'Expand testing program', desc: fm$(40000) + ' one-time · incident probability −' + Math.round(CFG.testingProgramCut * 50) + '% · brand trust +4', disabled: broke };
+  return {
+    kicker: 'Operations',
+    title: 'Incident report — Store #' + m.storeNo,
+    body: '<div class="memo"><div class="mh">Summary</div>'
+      + 'Category: ' + esc(m.cat) + '<br>Local coverage: ' + (m.days || 2) + ' days<br>'
+      + 'Brand trust: −' + (m.hit || CFG.incidentTrustHit) + '<br>'
+      + 'Recommended: ' + (saturated ? 'external audit' : 'expand testing program') + '</div>',
+    choices: [action, { id: 'file', name: 'Note and file', desc: 'No change.' }],
+  };
+}
+function resolveIncident(m, choiceId){
+  if ((choiceId === 'testing' || choiceId === 'audit') && S.cash >= 40000){
+    S.cash -= 40000;
+    if (choiceId === 'testing') S.testing = Math.min(2, S.testing + 1);
+    S.brand = Math.min(100, S.brand + 4);
+  }
+  S.hadIncident = true;
+}
+
+/* ---- act transitions ---- */
+function goScale(){
+  S.committedScale = true;
+  S.act = 2; S.screen = 'act2'; S.act2StartWeek = S.week;
+  S.cash -= CFG.expandCost;
+  S.debtWeekly += CFG.storeLoanWeekly;
+  S.storeCount = 2;
+  S.stores = [
+    { id: 1, f: 1.05, loyal: S.regulars.length * 1.6, units: 0 },
+    { id: 2, f: rnd(0.86, 1.1), loyal: 22, units: 0 },
+  ];
+  S.marketing = 0;
+  queueEvent('act2open');
+}
+function goNational(){
+  S.act = 3; S.screen = 'act3'; S.act3StartWeek = S.week;
+  S.franchised = true;
+  S.brand = Math.min(100, (S.brand || 62) + 4);
+  while (S.storeCount < 9) addStore();
+  queueEvent('act3open');
+}
+function endRun(kind){
+  S.ended = kind;
+  S.screen = 'credits';
+  S.modal = null; S.queue = [];
+  stopTicker();
+}
+
+/* ---- small chart builders for reveals ---- */
+function trendHTML(vals, color, label){
+  const mx = Math.max.apply(null, vals.map(Math.abs).concat([1]));
+  const first = vals[0], last = vals[vals.length - 1];
+  const shape = last > first * 1.15 ? 'rising' : (last < first * 0.85 ? 'falling' : 'roughly flat');
+  const aria = (label ? label + ': ' : '') + shape + ', ' + first + ' to ' + last;
+  return '<div class="trend" role="img" aria-label="' + esc(aria) + '">' + vals.map(v =>
+    '<span style="height:' + Math.max(6, Math.round(Math.abs(v) / mx * 60)) + 'px;background:' + color + '"></span>'
+  ).join('') + '</div>';
+}
+function revealRow(label, vals, color){
+  return '<div class="small" style="margin-top:8px"><b>' + esc(label) + '</b></div>' + trendHTML(vals, color, label);
+}
+
+/* ============================================================
+   SCRIPTED EVENTS
+   ============================================================ */
+const EVENTS = {};
+const EVENT_ORDER = [];
+function defEvent(id, def){ EVENTS[id] = def; EVENT_ORDER.push(id); }
+
+/* --- Act 1: the bandwidth memo (predict #1) --- */
+defEvent('p0_bandwidth', {
+  when: s => s.act === 1 && s.week >= 8,
+  modal: () => ({
+    kicker: 'A letter from your cousin',
+    title: 'Homework, apparently',
+    body: '<p>“I’m taking a marketing class. We have to survey a real business. One question, and <i>write your guess down before you look anything up</i>:”</p>'
+      + '<div class="memo">If your patty got noticeably better tomorrow — same price, same menu, same sign — what would happen to <b>walk-in</b> sales? (People who don’t know you yet.)</div>',
+    choices: [
+      { id: 'up', name: 'They’d go up', desc: 'Better burger, more burgers sold.' },
+      { id: 'flat', name: 'They’d stay about flat', desc: '' },
+      { id: 'down', name: 'They’d dip', desc: '' },
+    ],
+  }),
+  resolve: (m, c) => { S.predicts.p0 = c; queueDynamic({ id: 'p0r' }); },
+});
+EVENTS.p0r = {
+  modal: () => ({
+    kicker: 'Your cousin writes back',
+    title: 'The class dataset',
+    body: '<p>“We got numbers from twelve stands across the county that upgraded ingredients last year. Here’s the average, month by month:”</p>'
+      + revealRow('Walk-in sales after upgrade', [50, 51, 50, 52, 50, 51, 50, 51], 'var(--ink2)')
+      + revealRow('Counter-regular visits after upgrade', [50, 54, 58, 63, 67, 70, 74, 76], 'var(--good)')
+      + '<p class="small muted">“Weird, right? The people who stand close enough to tell the difference act on it. Everyone else just sees the sign.”</p>'
+      + '<p class="small muted">Your guess: <b>' + ({ up: 'they’d go up', flat: 'about flat', down: 'they’d dip' }[S.predicts.p0] || '—') + '</b>. Nobody grades this.</p>',
+    choices: [{ id: 'ok', name: 'Put the letter in the drawer', desc: '' }],
+  }),
+  resolve: () => {},
+};
+
+/* --- Act 1 → 2: the offer --- */
+EVENTS.expandOffer = {
+  modal: () => ({
+    kicker: 'After the lunch rush',
+    title: 'Marlowe, again',
+    body: '<p>Marlowe owns half the storefronts on Delancey and eats here twice a week. Today the napkin math comes out.</p>'
+      + '<div class="memo"><div class="mh">The offer</div>Corner unit on Delancey · fit-out ' + fm$(CFG.expandCost)
+      + ' from your savings · the rest on a note at ' + fm$(CFG.storeLoanWeekly) + '/wk<br>“Same menu, same sign. You can’t be behind two counters, but that’s what managers are for.”</div>',
+    choices: [
+      { id: 'go', name: 'Sign the lease — open Store #2', desc: fm$(CFG.expandCost) + ' now · ' + fm$(CFG.storeLoanWeekly) + '/wk note · a second set of books' },
+      { id: 'later', name: 'Not yet', desc: 'Marlowe shrugs, pays for lunch, leaves a good tip.' },
+    ],
+  }),
+  resolve: (m, c) => { if (c === 'go') goScale(); },
+};
+
+/* --- Act 2 opener --- */
+defEvent('act2open', {
+  when: () => false, // queued explicitly by goScale
+  modal: () => ({
+    kicker: 'Two counters',
+    title: 'You can’t be in two places',
+    body: '<p>Store #2 opens on a Tuesday. By Thursday you realize the week now arrives as paper: totals, percentages, a manager’s neat handwriting.</p>'
+      + '<p>It’s good paper. It says the machine is running.</p>'
+      + '<p class="small muted">New this act: the dashboard, procurement policies, and a marketing budget. Weeks pass on their own now — there’s too much to do to count them by hand.</p>',
+    choices: [{ id: 'ok', name: 'Read the first report', desc: '' }],
+  }),
+  resolve: () => {},
+});
+
+/* --- Act 2: the consultant’s appendix (predict #2) --- */
+defEvent('p1_consult', {
+  when: s => s.act >= 2 && s.week >= s.act2StartWeek + 6,
+  modal: () => ({
+    kicker: 'Milward & Brand · one-page appendix',
+    title: 'Before you turn the page',
+    body: '<p>The consultants left a sealed appendix with a sticky note: <i>“Clients learn more if they commit to a guess first.”</i></p>'
+      + '<div class="memo">Per $1,000 per week, which adds more <b>new</b> customers across all locations?<br>A) Upgrading the protein tier &nbsp; B) The radio campaign</div>',
+    choices: [
+      { id: 'quality', name: 'A — upgrade the input', desc: '' },
+      { id: 'ads', name: 'B — the campaign', desc: '' },
+    ],
+  }),
+  resolve: (m, c) => { S.predicts.p1 = c; queueDynamic({ id: 'p1r' }); },
+});
+EVENTS.p1r = {
+  modal: () => {
+    const mk = Math.max(4, Math.round(perThousand('marketing')));
+    const q = Math.max(1, Math.round(mk * 0.06));
+    return {
+      kicker: 'Milward & Brand · the appendix',
+      title: 'Exhibit 4',
+      body: '<div class="memo mono">New customers per $1,000/wk<br>Radio campaign: &nbsp;+' + mk + ' / wk<br>Input upgrade: &nbsp;&nbsp;+' + q + ' / wk</div>'
+        + '<p class="small muted">Footnote: the loyalty cohort responds to the upgrade (+9/wk per $1k) — but the loyalty cohort is ' + Math.round((S.lastWeek && S.lastWeek.loyalUnits ? S.lastWeek.loyalUnits / Math.max(1, S.lastWeek.units) : 0.14) * 100) + '% of volume and shrinking as you grow.</p>'
+        + '<p class="small muted">Your guess: <b>' + (S.predicts.p1 === 'quality' ? 'the upgrade' : 'the campaign') + '</b>.</p>',
+      choices: [{ id: 'ok', name: 'File the appendix', desc: '' }],
+    };
+  },
+  resolve: () => {},
+};
+
+/* --- Act 2: printable claims arrive --- */
+defEvent('claimsWar', {
+  when: s => s.act >= 2 && s.week >= s.act2StartWeek + 3,
+  modal: () => ({
+    kicker: 'Down the street',
+    title: 'Patty Palace buys window paint',
+    body: '<p>Every Patty Palace window now reads <b>“100% BEEF — ALWAYS.”</b> It was always 100% beef. Now it <i>says</i> so, in letters a bus can read.</p>'
+      + '<p class="small muted">Printed claims are available on your menu card. A claim only stays printed while your inputs actually back it.</p>',
+    choices: [{ id: 'ok', name: 'Noted', desc: '' }],
+  }),
+  resolve: () => { S.claimsUnlocked = true; },
+});
+
+/* --- Act 2: the badge (flip → arms race) — predict #3 --- */
+defEvent('p2_freshBadge', {
+  when: s => s.act >= 2 && s.week >= s.act2StartWeek + 11,
+  modal: () => ({
+    kicker: 'Platform notice',
+    title: 'Plates is adding a badge',
+    body: '<p>Plates — the review app on every phone in town — will start showing a <b>Verified Fresh</b> badge: auditors, spot checks, the works. Sourcing is about to be printed where strangers can read it.</p>'
+      + '<div class="memo">Sketch the curve 12 months out. Verified Fresh will be:</div>',
+    choices: [
+      { id: 'niche', name: 'A niche premium marker', desc: 'A few boutiques pay for the audit.' },
+      { id: 'stakes', name: 'Table stakes', desc: 'Most of the market ends up verified.' },
+    ],
+  }),
+  resolve: (m, c) => {
+    S.predicts.p2 = c;
+    S.legible.patty = true;
+    S.marketLegQ.patty = 56;
+    S.marketTarget.patty = 78;
+    S.flipWeek = S.week;
+    toast('Verified Fresh is live. Sourcing is now on the label.');
+  },
+});
+defEvent('p2_reveal', {
+  when: s => s.flipWeek > 0 && s.week >= s.flipWeek + 10,
+  modal: () => ({
+    kicker: 'Plates · quarterly letter',
+    title: 'Badge adoption to date',
+    body: revealRow('Share of the market holding Verified Fresh', [12, 19, 28, 39, 51, 62, 71], 'var(--accent)')
+      + '<p class="small muted">Once sourcing could be read from a distance, the whole market started competing on it. Average verified sourcing quality is up two grades industry-wide.</p>'
+      + '<p class="small muted">Your guess: <b>' + (S.predicts.p2 === 'stakes' ? 'table stakes' : 'a niche marker') + '</b>.</p>',
+    choices: [{ id: 'ok', name: 'Close the letter', desc: '' }],
+  }),
+  resolve: () => {},
+});
+
+/* --- Act 2 → 3: the partnership --- */
+defEvent('franchiseGate', {
+  when: s => s.act === 2 && s.storeCount >= CFG.act3StoreGate && s.week >= s.nextFranchise,
+  modal: () => ({
+    kicker: 'A phone call from the city',
+    title: 'Meridian Growth Partners',
+    body: '<p>“Six stores, one spreadsheet — you’ve already built the machine. We’d like to fund the copies.”</p>'
+      + '<div class="memo"><div class="mh">Term sheet, in short</div>National rollout capital · franchise system · your name stays on the sign<br>You stop running restaurants. You start running the company.</div>',
+    choices: [
+      { id: 'go', name: 'Take the partnership — go national', desc: 'Nine stores by spring. Then more.' },
+      { id: 'later', name: 'Hold at six for now', desc: 'They’ll call back. They always call back.' },
+    ],
+  }),
+  resolve: (m, c) => {
+    if (c === 'go') goNational();
+    else { S.fired.franchiseGate = false; S.nextFranchise = S.week + 9; }
+  },
+});
+
+/* --- Act 3 opener --- */
+defEvent('act3open', {
+  when: () => false, // queued by goNational
+  modal: () => ({
+    kicker: 'The company',
+    title: 'Systemwide',
+    body: '<p>There is a word for all of it now — the counters, the managers, the trucks, the Tuesdays: <b>systemwide</b>.</p>'
+      + '<p>Free cash flow allocates itself by the percentages you set. Stores open when the expansion pool fills. The graphs are honestly beautiful.</p>'
+      + '<p class="small muted">New this act: the allocator, SKU procurement, and the board’s inbox.</p>',
+    choices: [{ id: 'ok', name: 'Open the dashboard', desc: '' }],
+  }),
+  resolve: () => {},
+});
+
+/* --- Act 3: trans fat goes on the label (flip → eliminated) — predict #4 --- */
+defEvent('p3_transfat', {
+  when: s => s.act === 3 && s.week >= s.act3StartWeek + 7,
+  modal: () => ({
+    kicker: 'Regulatory affairs · briefing',
+    title: 'A new line on the label',
+    body: '<p>Beginning next quarter, nutrition labels must list <b>trans fat per serving</b>. Your current fry medium prints as <span class="mono">2g</span>.</p>'
+      + '<div class="memo">Before the data exists: sketch the market’s trans-fat curve 18 months out.</div>',
+    choices: [
+      { id: 'none', name: 'Labels won’t change much', desc: 'People don’t read fine print.' },
+      { id: 'premium', name: 'The premium segment reformulates', desc: 'A split market.' },
+      { id: 'zero', name: 'The number goes to zero everywhere', desc: 'Whole market reformulates.' },
+    ],
+  }),
+  resolve: (m, c) => { S.predicts.p3 = c; },
+});
+defEvent('transfatLaw', {
+  when: s => s.fired.p3_transfat && s.week >= s.act3StartWeek + 13,
+  modal: () => {
+    const tf = tierOf('oil').tf || 0;
+    const body = '<p>Trans fat is now printed per serving, menu by menu, chain by chain. A number anyone can read from anywhere.</p>'
+      + (tf > 0
+        ? '<div class="memo mono">Current medium: ' + tf + 'g per serving<br>Reformulated medium: 0g · +' + fm$(0.05) + '/unit<br>Supplier note: reformulated spec available at volume immediately</div>'
+        : '<div class="memo mono">Current medium: 0g per serving<br>Status: already compliant — label prints 0g<br>Note: most of the category is not, yet</div>');
+    return {
+      kicker: 'Effective this week',
+      title: 'The label is live',
+      body,
+      choices: tf > 0
+        ? [
+            { id: 'reform', name: 'Reformulate systemwide', desc: '+$0.05/unit · label prints 0g · matches where the market is heading' },
+            { id: 'hold', name: 'Hold current spec', desc: 'Cheaper for now · the label prints ' + tf + 'g' },
+          ]
+        : [{ id: 'ok', name: 'Note it and print the number', desc: 'Your menu already reads 0g' }],
+    };
+  },
+  resolve: (m, c) => {
+    S.legible.oil = true;
+    S.oilReformAvailable = true;
+    S.marketLegQ.oil = 52;
+    S.marketTarget.oil = 76;
+    S.lawWeek = S.week;
+    if (c === 'reform' && (tierOf('oil').tf || 0) > 0) setTier('oil', 2, true);
+    toast('Nutrition labeling in effect systemwide.');
+  },
+});
+defEvent('p3_reveal', {
+  when: s => s.lawWeek > 0 && s.week >= s.lawWeek + 12,
+  modal: () => ({
+    kicker: 'Category report',
+    title: 'Two quarters after the label',
+    body: revealRow('Share of menus printing 0g trans fat', [22, 41, 58, 74, 86, 94], 'var(--accent)')
+      + '<p class="small muted">Once the number was printed, it converged. 0g is no longer a difference anyone can compete on — it is simply what the label says, everywhere.</p>'
+      + '<p class="small muted">Your sketch: <b>' + ({ none: 'labels won’t change much', premium: 'premium splits off', zero: 'zero everywhere' }[S.predicts.p3] || '—') + '</b>.</p>',
+    choices: [{ id: 'ok', name: 'Archive the report', desc: '' }],
+  }),
+  resolve: () => {},
+});
+
+/* --- Act 3: the standard (the twist) --- */
+defEvent('regulation', {
+  when: s => s.act === 3 && s.lastWeek && s.lastWeek.revenue >= 220000 && s.week >= (s.nextRegulation || 0),
+  modal: () => {
+    const wkCost = (S.lastWeek ? S.lastWeek.revenue : 0) * 0.003;
+    return {
+      kicker: 'Board memo M-114',
+      title: 'Uniform Safety & Compliance Standard',
+      body: '<div class="memo"><div class="mh">Proposal</div>'
+        + 'The Industry Consortium invites co-sponsorship of a uniform safety and compliance standard: certified audits, logged temperatures, sealed supply verification — for every operator in the category.<br><br>'
+        + '<span class="mono">Cost to us: ' + fm$(wkCost) + '/wk (0.3% of revenue)<br>'
+        + 'Brand trust: +6 (printed on every door)<br>'
+        + 'Compliance overhead, all operators: ~' + fm$(38000) + '/yr fixed<br>'
+        + 'Board recommendation: sponsor</span></div>',
+      choices: [
+        { id: 'sponsor', name: 'Sponsor the standard', desc: fm$(wkCost) + '/wk · brand trust +6 · certified seal on every location' },
+        { id: 'decline', name: 'Decline for now', desc: 'The consortium will ask again.' },
+      ],
+    };
+  },
+  resolve: (m, c) => {
+    S.regulationSeen = true;
+    if (c === 'sponsor'){
+      S.sponsored = true; S.sponsoredWeek = S.week;
+      S.brand = Math.min(100, S.brand + 6);
+      toast('Certified seal rolling out to all locations.');
+    } else {
+      S.fired.regulation = false; S.nextRegulation = S.week + 10;
+    }
+  },
+});
+
+/* --- Act 3: the roadshow --- */
+defEvent('ipo', {
+  when: s => s.act === 3 && s.valuation >= CFG.ipoValuation && s.regulationSeen && s.week >= (s.nextIpo || 0),
+  modal: () => ({
+    kicker: 'Meridian Squire · capital markets',
+    title: 'The window is open',
+    body: '<p>“Comparable listings are pricing well. The book builds itself: national footprint, consistent unit economics, a brand people trust on sight.”</p>'
+      + '<div class="memo mono">Indicative valuation: ' + fm$(S.valuation) + '<br>Ticker reserved: SGT</div>',
+    choices: [
+      { id: 'go', name: 'Begin the roadshow', desc: 'Ring the bell. Roll the credits.' },
+      { id: 'later', name: 'Not this quarter', desc: 'Keep building.' },
+    ],
+  }),
+  resolve: (m, c) => {
+    if (c === 'go') endRun('scale');
+    else { S.fired.ipo = false; S.nextIpo = S.week + 10; }
+  },
+});
+
+/* ============================================================
+   LOCAL ARCS — the stand, deepened. Milestones by regular count.
+   ============================================================ */
+const LOCAL_ARCS = [
+  { // 16 regulars
+    modal: () => ({
+      kicker: 'Thursday, 3pm',
+      title: 'Maya',
+      body: '<p>She’s sixteen, sits at the end of the counter every Thursday, and watches your hands like they’re a broadcast. Today she finally asks: “Do you need help? I already know the order of operations. Patty, rest, toast, build.”</p>',
+      choices: [
+        { id: 'hire', name: 'Hire her — Thursdays and weekends', desc: fm$(260) + '/wk · capacity +40% · she learns the recipe card' },
+        { id: 'later', name: 'Not yet', desc: 'She nods. Keeps her seat. Keeps watching.' },
+      ],
+    }),
+    resolve: (m, c) => { if (c === 'hire'){ S.upgrades.apprentice = true; toast('Maya starts Saturday.'); } else { S.mayaOffered = true; } },
+  },
+  { // 24 regulars
+    modal: () => ({
+      kicker: 'A knock at the back door',
+      title: 'The Saturday market wants a stall',
+      body: '<p>Marisol from Green Fields says the farmers’ market has an open stall. “Bring the griddle. Everyone eats at eleven.”</p>',
+      choices: [
+        { id: 'yes', name: 'Take the stall', desc: fm$(250) + ' once · the neighborhood learns your name · walk-ins up for good' },
+        { id: 'no', name: 'The counter is enough', desc: '' },
+      ],
+    }),
+    resolve: (m, c) => { if (c === 'yes'){ S.cash -= 250; S.walkins += 14; toast('Saturdays are loud now, in the good way.'); } },
+  },
+  { // 34 regulars — acute variance, survivable, with a face
+    modal: () => ({
+      kicker: 'Tuesday, late',
+      title: 'The batch was off',
+      body: '<p>The grinder ran warm Tuesday and the batch came out wrong — flat, oddly dense. You caught it at the end of service, which is to say: too late. Rosa mentioned it, kindly. Dot left half and blamed her appetite, which has never once failed her.</p>',
+      choices: [
+        { id: 'open', name: 'Say so, plainly, and comp the week', desc: fm$(140) + ' · a sign by the register: “Tuesday wasn’t our best. Tuesday’s orders are on us.”' },
+        { id: 'quiet', name: 'Fix the grinder and move on', desc: 'Free · a few people keep a small question.' },
+      ],
+    }),
+    resolve: (m, c) => {
+      if (c === 'open'){
+        S.cash -= 140;
+        S.regulars.forEach(r => { r.trust = Math.min(100, r.trust + 8); });
+        toast('Dot points at the sign: “That’s why I come here.”');
+      } else {
+        for (let i = 0; i < 3 && i < S.regulars.length; i++){
+          const r = pick(S.regulars); r.trust = Math.max(5, r.trust - 5);
+        }
+      }
+    },
+  },
+  { // 46 regulars
+    modal: () => ({
+      kicker: 'An envelope, hand-delivered',
+      title: 'Rosa is retiring',
+      body: '<p>Thirty-one years at the library. The party is in the park on Sunday, and the envelope says, in Rosa’s careful hand: “I would like the food to be from the only place I trust to feed my friends.”</p>',
+      choices: [
+        { id: 'cater', name: 'Cater it — close early, bring the griddle', desc: fm$(180) + ' · everyone you know in one park' },
+        { id: 'send', name: 'Send trays with Maya', desc: fm$(90) + ' · you keep the counter open' },
+      ],
+    }),
+    resolve: (m, c) => {
+      const cost = c === 'cater' ? 180 : 90;
+      S.cash -= cost;
+      const boost = c === 'cater' ? 7 : 3;
+      S.regulars.forEach(r => { r.trust = Math.min(100, r.trust + boost); });
+      if (c === 'cater'){ S.regulars.push(makeRegular(S)); S.regulars.push(makeRegular(S)); }
+      S.committedLocal = true;
+      toast(c === 'cater' ? 'Rosa introduces you to the park as “the reason Sundays taste right.” Marlowe’s calls go to voicemail now.' : 'The trays come back empty. Marlowe’s calls go to voicemail now.');
+    },
+  },
+  { // 60 regulars
+    modal: () => ({
+      kicker: 'Maya, with a plate',
+      title: '“Try it before you say no.”',
+      body: '<p>She’s been staying late. The plate holds the Classic — but the onions are done differently, slow and dark, and there’s something in the sauce she won’t name yet.</p><p>It’s good. It’s <i>yours</i>, but it’s hers too.</p>',
+      choices: [
+        { id: 'menu', name: 'Put it on the board: “Maya’s Thursday Special”', desc: 'A rotating special · regulars bring friends to try it' },
+        { id: 'recipe', name: 'Add it to the recipe card, quietly', desc: 'The card gains a line in new handwriting' },
+      ],
+    }),
+    resolve: (m, c) => {
+      S.upgrades.specials = true;
+      toast(c === 'menu' ? 'Thursdays sell out by seven.' : 'Old Gus notices in one bite. Says nothing. Orders another.');
+    },
+  },
+  { // 80 regulars
+    modal: () => ({
+      kicker: 'First Friday',
+      title: 'The block association evening',
+      body: '<p>They hold it on the sidewalk outside your stand now — nobody decided this, it just happened, the way rivers happen. Folding chairs. Linh brings flowers that didn’t sell. Marcus plays. Coach Bell referees an argument about pickles.</p>',
+      choices: [{ id: 'ok', name: 'Keep the griddle on late', desc: 'Walk-ins up for good · the corner is yours, and you are the corner’s' }],
+    }),
+    resolve: () => { S.walkins += 20; },
+  },
+  { // 100 regulars — the ending
+    modal: () => {
+      const last = S.regulars[S.regulars.length - 1];
+      return {
+        kicker: 'A Tuesday like any other',
+        title: 'The hundredth',
+        body: '<p>' + esc(last ? last.name : 'Someone new') + ' — ' + esc(last ? last.tag : 'new to the block') + ' — pays, hesitates, and says: “You know, you’re the only place left that knows my order.”</p>'
+          + '<p>You look down the counter. You know every order. You know every name. All hundred.</p>',
+        choices: [
+          { id: 'end', name: 'Flip the sign. Count the faces.', desc: 'Roll the credits' },
+          { id: 'stay', name: 'One more week first', desc: 'The credits will wait' },
+        ],
+      };
+    },
+    resolve: (m, c) => {
+      if (c === 'end') endRun('local');
+      else { S.localArc--; S.fired['localArc6'] = false; S.arc6Wait = S.week + 5; }
+    },
+  },
+];
+LOCAL_ARCS.forEach((arc, i) => { EVENTS['localArc' + i] = arc; });
+
+/* ---- generic modal dispatch ---- */
+function buildModal(m){
+  if (m.id === 'pressure') return pressureModal(m);
+  if (m.id === 'incident') return incidentModal(m);
+  const ev = EVENTS[m.id];
+  return ev ? ev.modal(m) : null;
+}
+function resolveModal(m, choiceId){
+  if (m.id === 'pressure') return resolvePressure(m, choiceId);
+  if (m.id === 'incident') return resolveIncident(m, choiceId);
+  const ev = EVENTS[m.id];
+  if (ev && ev.resolve) ev.resolve(m, choiceId);
+}
+
+/* ---- volume thresholds: the lens points upstream ---- */
+function checkVolumeThresholds(){
+  if (S.act < 2 || !S.lastWeek) return;
+  const units = S.lastWeek.units;
+  QUALITY_ATTRS.forEach(a => {
+    const idx = S.tiers[a];
+    const t = ATTRS[a].tiers[idx];
+    const key = 'vol_' + a + '_' + idx;             // re-arms per tier, not per attribute
+    if (t.maxVol && t.maxVol < units && !S.fired[key] && idx < ATTRS[a].tiers.length - 1){
+      S.fired[key] = true;
+      if (a === 'patty' && idx === 0){
+        queueDynamic({ id: 'hartmannDrop' });
+      } else {
+        const oldName = t.name;
+        const next = idx + 1;
+        setTier(a, next, true);
+        toast('Procurement: ' + oldName + ' below volume threshold — reassigned to ' + tierLabel(a, next) + '.');
+      }
+    }
+  });
+}
+EVENTS.hartmannDrop = {
+  modal: () => ({
+    kicker: 'Procurement notice PRC-31',
+    title: 'Vendor below volume threshold',
+    body: '<div class="memo mono">Vendor: Hartmann Farm<br>Max capacity: 4,000 units/wk<br>Network demand: ' + fmN(S.lastWeek ? S.lastWeek.units : 0) + ' units/wk<br>Status: removed from eligible vendor list<br>Reassignment: Tier B — regional consolidator</div>'
+      + '<p class="small muted">A voicemail from Ernst Hartmann, twelve seconds: “Understood. It was good doing business. Come by if you’re ever nearby.”</p>',
+    choices: [{ id: 'ok', name: 'Acknowledge', desc: 'Spec continuity maintained' }],
+  }),
+  resolve: () => { setTier('patty', 1, true); },
+};
+
+/* ============================================================
+   AUDIO — everything synthesized in code. No files, no melody
+   you could hum in act 1, and by act 3 no world left to hear.
+   ============================================================ */
+const AUDIO = {
+  ctx: null, master: null, started: false,
+  scene: null, sceneBus: null, sceneStop: null,
+  arpTimer: null, padTimer: null,
+  pref: (function(){ try { return JSON.parse(localStorage.getItem(CFG.audioPrefKey) || '{}'); } catch (e) { return {}; } })(),
+  get muted(){ return !!this.pref.muted; },
+  get vol(){ return this.pref.vol != null ? this.pref.vol : CFG.audioDefaultVol; },
+  savePref(){ try { localStorage.setItem(CFG.audioPrefKey, JSON.stringify(this.pref)); } catch (e) {} },
+
+  start(){
+    if (this.started) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    this.started = true;
+    this.ctx = new AC();
+    this.master = this.ctx.createGain();
+    this.master.gain.value = 0;
+    this.master.connect(this.ctx.destination);
+    if (!this.muted){
+      this.master.gain.linearRampToValueAtTime(this.vol, this.ctx.currentTime + 1.4); // page loads silent; fade in on first gesture
+    } else {
+      this.ctx.suspend();
+    }
+    const want = this.scene; this.scene = null;
+    this.setScene(want || 'quiet');
+  },
+  setMuted(m){
+    this.pref.muted = m; this.savePref();
+    if (!this.ctx) return;
+    if (m){
+      this.master.gain.setTargetAtTime(0, this.ctx.currentTime, 0.08);
+      setTimeout(() => { if (this.muted && this.ctx) this.ctx.suspend(); }, 350);
+    } else {
+      this.ctx.resume();
+      this.master.gain.setTargetAtTime(this.vol, this.ctx.currentTime, 0.15);
+    }
+  },
+  setVol(v){
+    this.pref.vol = v; this.savePref();
+    if (this.ctx && !this.muted) this.master.gain.setTargetAtTime(v, this.ctx.currentTime, 0.1);
+  },
+
+  _noiseBuf: null,
+  noise(){
+    if (!this._noiseBuf){
+      const len = this.ctx.sampleRate * 2;
+      this._noiseBuf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+      const d = this._noiseBuf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    }
+    const src = this.ctx.createBufferSource();
+    src.buffer = this._noiseBuf; src.loop = true;
+    return src;
+  },
+
+  /* ---- scenes ---- */
+  setScene(name){
+    if (name === this.scene) return;
+    this.scene = name;
+    if (!this.ctx) return;
+    // fade out the old bed
+    if (this.sceneBus){
+      const old = this.sceneBus, oldStop = this.sceneStop;
+      old.gain.setTargetAtTime(0, this.ctx.currentTime, 0.7);
+      setTimeout(() => { try { oldStop && oldStop(); old.disconnect(); } catch (e) {} }, 2600);
+    }
+    if (this.arpTimer){ clearInterval(this.arpTimer); this.arpTimer = null; }
+    if (this.padTimer){ clearInterval(this.padTimer); this.padTimer = null; }
+    this.sceneBus = null; this.sceneStop = null;
+    if (name === 'quiet') return;
+    const bus = this.ctx.createGain();
+    bus.gain.value = 0;
+    bus.connect(this.master);
+    bus.gain.setTargetAtTime(1, this.ctx.currentTime + 0.2, 1.0); // crossfade in
+    this.sceneBus = bus;
+    if (name === 'act1') this.sceneStop = this.buildAct1(bus);
+    else if (name === 'act2') this.sceneStop = this.buildAct2(bus);
+    else if (name === 'act3') this.sceneStop = this.buildAct3(bus);
+  },
+
+  // Act 1: griddle, room, a radio you can't quite make out. No music.
+  buildAct1(bus){
+    const c = this.ctx, nodes = [];
+    // griddle sizzle
+    const siz = this.noise();
+    const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 3400;
+    const sg = c.createGain(); sg.gain.value = 0.016;
+    const lfo = c.createOscillator(); lfo.frequency.value = 6.3;
+    const lg = c.createGain(); lg.gain.value = 0.007;
+    lfo.connect(lg); lg.connect(sg.gain);
+    siz.connect(hp); hp.connect(sg); sg.connect(bus);
+    siz.start(); lfo.start(); nodes.push(siz, lfo);
+    // room / street tone
+    const room = this.noise();
+    const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 240;
+    const rg = c.createGain(); rg.gain.value = 0.035;
+    room.connect(lp); lp.connect(rg); rg.connect(bus);
+    room.start(); nodes.push(room);
+    // the radio: detuned murmur through a wandering bandpass — never a melody
+    const r1 = c.createOscillator(); r1.type = 'sawtooth'; r1.frequency.value = 147;
+    const r2 = c.createOscillator(); r2.type = 'sawtooth'; r2.frequency.value = 151;
+    const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 900; bp.Q.value = 6;
+    const wander = c.createOscillator(); wander.frequency.value = 0.07;
+    const wg = c.createGain(); wg.gain.value = 320;
+    wander.connect(wg); wg.connect(bp.frequency);
+    const mur = c.createGain(); mur.gain.value = 0.012;
+    const wob = c.createOscillator(); wob.frequency.value = 0.31;
+    const wobg = c.createGain(); wobg.gain.value = 0.006;
+    wob.connect(wobg); wobg.connect(mur.gain);
+    r1.connect(bp); r2.connect(bp); bp.connect(mur); mur.connect(bus);
+    r1.start(); r2.start(); wander.start(); wob.start(); nodes.push(r1, r2, wander, wob);
+    return () => nodes.forEach(n => { try { n.stop(); } catch (e) {} });
+  },
+
+  // Act 2: the ambience thins; a sparse, pleasant pad breathes underneath.
+  buildAct2(bus){
+    const c = this.ctx, nodes = [];
+    const siz = this.noise();
+    const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 3600;
+    const sg = c.createGain(); sg.gain.value = 0.005;
+    siz.connect(hp); hp.connect(sg); sg.connect(bus);
+    siz.start(); nodes.push(siz);
+    const chords = [[130.81, 164.81, 196.0, 246.94], [174.61, 220.0, 261.63, 329.63]];
+    let ci = 0;
+    const swell = () => {
+      if (this.scene !== 'act2' || document.hidden || this.muted) return;
+      const freqs = chords[ci % chords.length]; ci++;
+      freqs.forEach((f, i) => {
+        const o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = f; o.detune.value = (i % 2 ? 4 : -4);
+        const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 850;
+        const g = c.createGain(); g.gain.value = 0;
+        const t = c.currentTime;
+        g.gain.linearRampToValueAtTime(0.014, t + 2.8);
+        g.gain.linearRampToValueAtTime(0, t + 8.5);
+        o.connect(lp); lp.connect(g); g.connect(bus);
+        o.start(t); o.stop(t + 9);
+      });
+    };
+    swell();
+    this.padTimer = setInterval(swell, 9000);
+    return () => nodes.forEach(n => { try { n.stop(); } catch (e) {} });
+  },
+
+  // Act 3: the productivity bed. Gridded, airy, synthetic. Nothing sizzles.
+  buildAct3(bus){
+    const c = this.ctx, nodes = [];
+    // sustained air pad — A minor, so every arp tone sits inside it
+    [220.0, 261.63, 329.63].forEach((f, i) => {
+      const o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = f; o.detune.value = i * 3 - 3;
+      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700;
+      const g = c.createGain(); g.gain.value = 0.010;
+      o.connect(lp); lp.connect(g); g.connect(bus);
+      o.start(); nodes.push(o);
+    });
+    // light arpeggio on a grid, ~96bpm eighths, pentatonic and pleasant
+    const scale = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.7];
+    const pattern = [0, 2, 4, 6, 4, 2, 3, 5];
+    let step = 0, nextT = 0;
+    const tick = () => {
+      if (this.scene !== 'act3' || document.hidden || this.muted) return;
+      const now = c.currentTime;
+      if (nextT < now) nextT = now + 0.05;
+      while (nextT < now + 0.35){
+        const f = scale[pattern[step % pattern.length]];
+        const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const g = c.createGain(); g.gain.value = 0;
+        g.gain.setValueAtTime(0, nextT);
+        g.gain.linearRampToValueAtTime(0.020, nextT + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0004, nextT + 0.26);
+        o.connect(g); g.connect(bus);
+        o.start(nextT); o.stop(nextT + 0.3);
+        if (step % 2 === 0){ // airy hat
+          const h = this.noise();
+          const hpf = c.createBiquadFilter(); hpf.type = 'highpass'; hpf.frequency.value = 8500;
+          const hg = c.createGain(); hg.gain.value = 0;
+          hg.gain.setValueAtTime(0, nextT);
+          hg.gain.linearRampToValueAtTime(0.012, nextT + 0.004);
+          hg.gain.exponentialRampToValueAtTime(0.0004, nextT + 0.05);
+          h.connect(hpf); hpf.connect(hg); hg.connect(bus);
+          h.start(nextT); h.stop(nextT + 0.07);
+        }
+        step++; nextT += 0.3125; // 96bpm eighths
+      }
+    };
+    this.arpTimer = setInterval(tick, 180);
+    return () => nodes.forEach(n => { try { n.stop(); } catch (e) {} });
+  },
+
+  /* ---- one-shots ---- */
+  blip(freq, dur, gain, type){
+    if (!this.ctx || this.muted) return;
+    const c = this.ctx, t = c.currentTime;
+    const o = c.createOscillator(); o.type = type || 'sine'; o.frequency.value = freq;
+    const g = c.createGain(); g.gain.value = 0;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(gain, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.0004, t + dur);
+    o.connect(g); g.connect(this.master);
+    o.start(t); o.stop(t + dur + 0.02);
+  },
+  noiseHit(freqLo, freqHi, dur, gain){
+    if (!this.ctx || this.muted) return;
+    const c = this.ctx, t = c.currentTime;
+    const n = this.noise();
+    const bp = c.createBiquadFilter(); bp.type = 'bandpass';
+    bp.frequency.value = (freqLo + freqHi) / 2; bp.Q.value = 1.2;
+    const g = c.createGain(); g.gain.value = 0;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(gain, t + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0004, t + dur);
+    n.connect(bp); bp.connect(g); g.connect(this.master);
+    n.start(t); n.stop(t + dur + 0.02);
+  },
+  uiClick(){
+    if (!S) { this.noiseHit(1200, 2400, 0.05, 0.03); return; }
+    if (S.act === 1) this.noiseHit(900, 2200, 0.06, 0.035);       // worn counter button
+    else if (S.act === 2) this.blip(1320, 0.05, 0.025, 'triangle'); // office click
+    else this.blip(1760, 0.045, 0.02, 'sine');                     // glass tap
+  },
+  paper(){ this.noiseHit(1600, 3200, 0.16, 0.05); },
+  coin(){ this.blip(2489, 0.09, 0.04); setTimeout(() => this.blip(3135, 0.11, 0.035), 60); },
+  chalk(){ this.noiseHit(1000, 1600, 0.09, 0.03); },
+  fanfare(){
+    [[523.25, 0], [659.25, 110], [783.99, 220], [1046.5, 330]].forEach(p =>
+      setTimeout(() => this.blip(p[0], 0.34, 0.05, 'triangle'), p[1]));
+  },
+};
+// page loads silent; the first gesture wakes the audio graph
+['pointerdown', 'keydown'].forEach(ev =>
+  document.addEventListener(ev, function once(){
+    document.removeEventListener(ev, once);
+    AUDIO.start();
+  }, { once: true }));
+document.addEventListener('visibilitychange', () => {
+  if (!AUDIO.ctx) return;
+  if (document.hidden) AUDIO.ctx.suspend();
+  else if (!AUDIO.muted) AUDIO.ctx.resume();
+});
+
+/* ============================================================
+   FEEDBACK — rolling numbers, floaters, confetti.
+   ============================================================ */
+const NUMC = {}; // last shown value per number key
+function fmtNum(v, f){
+  switch (f){
+    case '$': return fm$(v);
+    case 'n': return fmN(v);
+    case 'p2': return '$' + v.toFixed(2);
+    case 'pct': return Math.round(v) + '%';
+    case 'd': { const r = Math.round(v); return r === 0 ? '—' : (r > 0 ? '+' : '−') + Math.abs(r); }
+    default: return String(Math.round(v));
+  }
+}
+function weekLabelHTML(w){
+  const y = Math.floor((w - 1) / 52) + 1; const ww = ((w - 1) % 52) + 1;
+  return 'Year ' + y + ' · Week ' + nk('week', ww, 'i');
+}
+function nk(key, raw, fmt){
+  return '<span class="nkv" data-nk="' + key + '" data-val="' + raw + '" data-fmt="' + fmt + '">' + fmtNum(raw, fmt) + '</span>';
+}
+function flashEl(el){
+  const host = el.closest('.kpi') || el;
+  host.classList.remove('hl'); void host.offsetWidth;
+  host.classList.add('hl');
+  setTimeout(() => host.classList.remove('hl'), 650);
+}
+function rollNumbers(){
+  app.querySelectorAll('[data-nk]').forEach(el => {
+    const k = el.dataset.nk, f = el.dataset.fmt;
+    const v = parseFloat(el.dataset.val);
+    if (isNaN(v)) return;
+    const prev = NUMC[k];
+    NUMC[k] = v;
+    if (prev == null || prev === v) return;
+    const sig = Math.abs(v - prev) / Math.max(Math.abs(prev), 1) > 0.005;
+    if (sig) flashEl(el);
+    if (RM.matches) return; // reduced motion: instant value + highlight only
+    const t0 = performance.now(), dur = 420;
+    const stepFn = t => {
+      if (!el.isConnected){ return; }
+      const p = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmtNum(prev + (v - prev) * e, f);
+      if (p < 1) requestAnimationFrame(stepFn);
+    };
+    requestAnimationFrame(stepFn);
+  });
+}
+function spawnFloaters(){
+  if (!S || !S.fx || !S.fx.floaters || !S.fx.floaters.length) return;
+  const list = S.fx.floaters.slice(-6); // only this tick's worth, never a backlog
+  S.fx.floaters = [];
+  // reduced motion still gets the floaters — statically, via the RM CSS block
+  if (!celebrating() || document.hidden) return;
+  list.forEach((fl, i) => {
+    const host = app.querySelector('[data-nk="' + fl.key + '"]');
+    const card = host && (host.closest('.kpi') || host.closest('td'));
+    if (!card) return;
+    const sp = document.createElement('span');
+    sp.className = 'floater ' + (fl.dir || 'up');
+    sp.textContent = fl.text;
+    sp.style.top = (2 + i * 12) + 'px';
+    card.appendChild(sp);
+    setTimeout(() => { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 1100);
+  });
+}
+function throwConfetti(){
+  if (RM.matches || !celebrating() || document.hidden) return;
+  const n = Math.round(14 + 34 * juice01());
+  const layer = document.createElement('div');
+  layer.className = 'confetti-layer';
+  layer.setAttribute('aria-hidden', 'true');
+  const colors = ['#f5b63d', '#79b04f', '#d84f37', '#4f8ef7', '#efab55', '#e8a24f'];
+  for (let i = 0; i < n; i++){
+    const s = document.createElement('span');
+    s.style.left = (Math.random() * 100) + 'vw';
+    s.style.background = colors[i % colors.length];
+    s.style.setProperty('--dur', (0.9 + Math.random() * 0.7) + 's');
+    s.style.setProperty('--rot', Math.round(300 + Math.random() * 480) + 'deg');
+    s.style.animationDelay = (Math.random() * 0.25) + 's';
+    layer.appendChild(s);
+  }
+  document.body.appendChild(layer);
+  setTimeout(() => { if (layer.parentNode) layer.parentNode.removeChild(layer); }, 2100);
+}
+function handleParty(){
+  if (!S || !S.fx) return;
+  // legacy single-slot support, then the queue
+  if (S.fx.party){ (S.fx.parties = S.fx.parties || []).push(S.fx.party); S.fx.party = null; }
+  if (!S.fx.parties || !S.fx.parties.length) return;
+  const party = S.fx.parties.shift();
+  toast('Milestone — ' + party.label + '.', 'badge-toast');
+  if (!celebrating()) return;
+  // celebration scales with juice, not with a hardcoded act check
+  const j = juice01();
+  if (j > 0.7){ throwConfetti(); AUDIO.fanfare(); }
+  else if (j > 0.4){ AUDIO.coin(); }
+}
+let RECEIPT_SHOWN = 0;
+let IPO_W = null;
+function easeIpoBar(){
+  const fill = app.querySelector('.ipo-fill');
+  if (!fill) return;
+  const target = Number(fill.dataset.w);
+  if (RM.matches){ fill.style.width = target + '%'; IPO_W = target; return; }
+  requestAnimationFrame(() => { fill.style.width = target + '%'; });
+  IPO_W = target;
+}
+function sceneFor(){
+  if (!S) return 'quiet';
+  if (S.screen === 'sentence') return 'quiet';
+  if (S.screen === 'credits' || S.screen === 'endcard') return S.ended === 'local' ? 'act1' : 'act3';
+  return 'act' + S.act;
+}
+function postRender(){
+  rollNumbers();
+  spawnFloaters();
+  handleParty();
+  easeIpoBar();
+  AUDIO.setScene(sceneFor());
+  if (S && S.lastWeek) RECEIPT_SHOWN = S.lastWeek.week || S.week;
+}
+
+/* ============================================================
+   UI CORE
+   ============================================================ */
+const app = document.getElementById('app');
+function toast(msg, cls){
+  const box = document.getElementById('toasts');
+  while (box.children.length >= 3) box.removeChild(box.firstChild);
+  const t = document.createElement('div');
+  t.className = 'toast' + (cls ? ' ' + cls : ''); t.textContent = msg;
+  box.appendChild(t);
+  setTimeout(() => { if (t.parentNode) t.parentNode.removeChild(t); }, 4200);
+}
+
+/* ---- the menu card: same photo, drifting fine print ---- */
+const FINE_PRINT = {
+  patty: [
+    'Quarter-pound patty, ground fresh Tuesdays & Fridays — Hartmann Farm, Route 9.',
+    'Quarter-pound select beef patty.',
+    'Net wt 3.2 oz.* cooked patty · protein blend · meets Spec 7.2.',
+  ],
+  produce: [
+    'Lettuce & tomato from Green Fields Co-op, picked the day before.',
+    'Crisp lettuce & ripe tomato.',
+    'Produce: certified program suppliers.',
+  ],
+  bun: [
+    'Sesame bun, baked before dawn at Almeida Bakery.',
+    'Fresh-baked sesame bun.',
+    'Enriched sesame-style bun.',
+  ],
+  seasoning: [
+    'Seasoned from the family recipe card.',
+    'House seasoning blend.',
+    '',
+  ],
+  oil: [
+    'Finished in a fresh-pressed blend.',
+    '',
+    '',
+  ],
+};
+function finePrintParts(){
+  const parts = [];
+  ['patty', 'produce', 'bun', 'seasoning', 'oil'].forEach(a => {
+    const fp = FINE_PRINT[a][S.tiers[a]];
+    if (fp) parts.push(fp);
+  });
+  const printedClaims = S.claims
+    .filter(c => CLAIMS[c] && CLAIMS[c].req(S))
+    .filter(c => !(c === 'zerotf' && S.legible.oil)) // the label already prints the number
+    .map(c => CLAIMS[c].name);
+  if (S.legible.oil) printedClaims.push((tierOf('oil').tf || 0) + 'g trans fat per serving');
+  if (printedClaims.length) parts.push(printedClaims.join(' · ') + '.');
+  if (S.act === 3) parts.push((S.tiers.patty === 2 ? '*Weight before cooking. ' : '') + 'See nutrition information for details.');
+  return parts;
+}
+function menuCardHTML(fpOverride, priceOverride){
+  const parts = fpOverride || finePrintParts();
+  const price = priceOverride != null ? priceOverride : S.price;
+  const priceHTML = fpOverride || priceOverride != null ? '$' + price.toFixed(2) : nk('menuprice', price, 'p2');
+  return '<div class="menu-card">'
+    + '<div class="photo"><svg role="img" aria-label="The Classic burger" viewBox="0 0 240 210"><use href="#burger-art"/></svg></div>'
+    + '<div class="mtitle">The Classic</div>'
+    + '<div class="mprice">' + priceHTML + '</div>'
+    + '<div class="fineprint">' + parts.map(esc).join('<br>') + '</div>'
+    + '</div>';
+}
+
+/* ---- shared bits ---- */
+function kpi(k, v, d, dir){
+  return '<div class="kpi"><div class="k">' + esc(k) + '</div><div class="v">' + v + '</div>'
+    + (d ? '<div class="d ' + (dir || '') + '">' + d + '</div>' : '') + '</div>';
+}
+function qualityWord(q){
+  if (S.act === 1) return q >= 85 ? '★★★★★' : q >= 70 ? '★★★★' : q >= 55 ? '★★★' : '★★';
+  if (S.act === 2) return q >= 85 ? 'Grade A' : q >= 70 ? 'Grade B' : q >= 55 ? 'Grade C' : 'Grade D';
+  return ''; // act 3: your own interface no longer carries it
+}
+function tierRowsHTML(a){
+  const attr = ATTRS[a];
+  let html = '';
+  attr.tiers.forEach((t, i) => {
+    if (t.hidden && !S.oilReformAvailable) return;
+    const cur = S.tiers[a] === i;
+    if (!cur && S.act >= 2 && t.maxVol && S.lastWeek && t.maxVol < S.lastWeek.units){
+      html += '<div class="optrow"><div class="grow"><span class="oname muted">' + esc(tierLabel(a, i)) + '</span>'
+        + '<div class="odesc">Below volume threshold — not eligible</div></div></div>';
+      return;
+    }
+    const cost = nk('cost_' + a + '_' + i, t.cost * S.costMult[a], t.weekly ? '$' : 'p2') + (t.weekly ? '/wk' : '/unit');
+    const qw = qualityWord(t.q);
+    html += '<div class="optrow' + (cur ? ' current' : '') + '">'
+      + '<div class="grow"><span class="oname">' + esc(tierLabel(a, i)) + '</span>'
+      + (qw ? ' <span class="tag">' + qw + '</span>' : '')
+      + (S.act === 1 ? '<div class="odesc">' + esc(t.desc) + '</div>' : '')
+      + '</div>'
+      + '<div class="ocost">' + cost + (cur ? '<br><span class="tag on">current</span>'
+        : '<br><button class="btn small quiet" data-a="setTier" data-attr="' + a + '" data-i="' + i + '">switch</button>') + '</div>'
+      + '</div>';
+  });
+  const legTag = S.legible[a] ? ' <span class="tag on">on the label</span>' : '';
+  return '<div style="margin-bottom:10px"><b class="small">' + esc(attrName(a)) + '</b>' + legTag + html + '</div>';
+}
+
+/* ---- modal ---- */
+function modalHTML(){
+  if (!S.modal) return '';
+  const def = buildModal(S.modal);
+  if (!def) return '';
+  return '<div class="overlay"><div class="modal" role="dialog" aria-modal="true" aria-label="' + esc(def.title) + '">'
+    + (def.kicker ? '<div class="kicker">' + esc(def.kicker) + '</div>' : '')
+    + '<h3>' + esc(def.title) + '</h3>'
+    + def.body
+    + '<div class="choices">' + def.choices.map(c =>
+      '<button class="choice" data-a="choose" data-c="' + esc(c.id) + '"' + (c.disabled ? ' disabled' : '') + '>'
+      + '<div class="cname">' + esc(c.name) + '</div>'
+      + (c.desc ? '<div class="cdesc">' + esc(c.desc) + '</div>' : '')
+      + '</button>').join('')
+    + '</div></div></div>';
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+function audioControlsHTML(){
+  return '<span class="audioctl">'
+    + '<button class="btn small quiet" data-a="mute" aria-label="' + (AUDIO.muted ? 'Unmute' : 'Mute') + '" aria-pressed="' + (AUDIO.muted ? 'true' : 'false') + '">' + (AUDIO.muted ? '🔇' : '🔊') + '</button>'
+    + '<input type="range" class="volslider" min="0" max="100" step="5" value="' + Math.round(AUDIO.vol * 100) + '" data-r="vol" aria-label="Volume">'
+    + '</span>';
+}
+function titleScreen(){
+  const hasSave = !!loadSave();
+  return '<div class="title-screen">'
+    + '<svg role="img" aria-label="A burger" viewBox="0 0 240 210"><use href="#burger-art"/></svg>'
+    + '<div class="logo">Same Great Taste</div>'
+    + '<div class="tagline">a burger stand, and what happens next</div>'
+    + '<div class="menu-board"><div class="b1">The Classic — ' + fm$(CFG.startPrice) + '</div>'
+    + '<div class="b2">est. by your grandfather · continued by you</div></div>'
+    + '<div class="stack">'
+    + (hasSave ? '<button class="btn" data-a="continueRun">Continue</button>' : '')
+    + '<button class="btn' + (hasSave ? ' ghost' : '') + '" data-a="newRun">New run</button>'
+    + '<label class="small muted" for="seedin">Seed (optional)</label>'
+    + '<input id="seedin" class="mono" style="padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);text-align:center" placeholder="SGT-XXXXX">'
+    + '</div>'
+    + '<div class="audioctl-row">' + audioControlsHTML() + '</div>'
+    + '<div class="seedline">saves locally · no account · one sitting or many</div>'
+    + '</div>';
+}
+
+function act1Screen(){
+  const lw = S.lastWeek;
+  const cap = capacity();
+  let html = '';
+  html += '<div class="topbar"><span class="brand">Same Great Taste</span>'
+    + '<span class="stat">' + weekLabelHTML(S.week) + '</span>'
+    + audioControlsHTML()
+    + '<button class="btn small quiet" data-a="settings" aria-label="Settings">⋯</button>'
+    + '<div class="sub">the stand on Cordova Street</div></div>';
+
+  html += '<div class="kpis">'
+    + kpi('Cash', nk('cash', S.cash, '$'))
+    + kpi('Regulars', nk('regs', S.regulars.length, 'i') + '<span class="small muted"> by name</span>')
+    + kpi('Last week', lw ? nk('lwunits', lw.units, 'n') + ' burgers' : '—', lw ? nk('lwnet', lw.net, '$') + ' net' : '', lw && lw.net >= 0 ? 'up' : 'dn')
+    + kpi('Unit cost', nk('uc', unitCost(), 'p2'), 'sell at ' + nk('sellat', S.price, 'p2'))
+    + '</div>';
+
+  html += menuCardHTML();
+
+  // price + claims
+  html += '<div class="card"><h2>The board <span class="h-note">Patty Palace charges ' + nk('mktprice', S.marketPrice, 'p2') + '</span></h2>'
+    + '<div class="spread"><span>Your price</span><span>'
+    + '<button class="btn small quiet" data-a="price" data-d="-1" aria-label="Lower price"' + (S.price - 0.25 < 1 ? ' disabled' : '') + '>−25¢</button> '
+    + '<b class="mono">' + nk('price', S.price, 'p2') + '</b> '
+    + '<button class="btn small quiet" data-a="price" data-d="1" aria-label="Raise price">+25¢</button>'
+    + '</span></div>';
+  if (S.claimsUnlocked){
+    html += '<hr class="hr"><div class="small" style="margin-bottom:6px"><b>Printed claims</b> <span class="muted">— stay printed only while your inputs back them</span></div>';
+    Object.keys(CLAIMS).forEach(c => {
+      const cl = CLAIMS[c];
+      if (c === 'zerotf' && !S.oilReformAvailable && !S.legible.oil) return;
+      const on = S.claims.includes(c);
+      const ok = cl.req(S);
+      html += '<div class="spread small" style="padding:3px 0"><span>“' + esc(cl.name) + '”'
+        + (on && !ok ? ' <span class="tag">not currently true — unprinted</span>' : '') + '</span>'
+        + '<button class="btn small ' + (on ? '' : 'quiet') + '" data-a="claim" data-c="' + c + '"' + (!on && !ok ? ' disabled' : '') + '>'
+        + (on ? 'printed' : ok ? 'print it' : 'inputs don’t back it') + '</button></div>';
+    });
+  }
+  html += '</div>';
+
+  // counter feed
+  html += '<div class="card"><h2>At the counter'
+    + (lw ? ' <span class="h-note">' + nk('cregs', lw.regularUnits, 'i') + ' regulars · ' + nk('cwalk', lw.strangerUnits, 'i') + ' walk-ins' + (S.turnedAway > 3 ? ' · ' + S.turnedAway + ' walked off (capacity ' + Math.round(cap) + ')' : '') + '</span>' : '')
+    + '</h2>';
+  // the week's receipt — itemized, narrative, traceable
+  if (lw && lw.receipt){
+    const fresh = RECEIPT_SHOWN !== lw.week;
+    html += '<div class="receipt' + (fresh ? ' fresh' : '') + '" role="status" aria-label="The week’s receipt">'
+      + '<div class="r-head">' + esc(weekLabel(lw.week)) + ' · the till</div><ul>'
+      + lw.receipt.map(r => {
+        if (r.info) return '<li class="r-info"><span>' + esc(r.t) + '</span></li>';
+        const up = r.v >= 0;
+        return '<li' + (r.net ? ' class="r-net"' : '') + '><span>' + esc(r.t) + '</span>'
+          + '<b class="' + (up ? 'rv-up' : 'rv-dn') + '">' + (up ? '+' : '−') + '$' + Math.abs(r.v).toFixed(2) + '</b></li>';
+      }).join('')
+      + '</ul></div>';
+  }
+  if (S.feed.length){
+    html += '<ul class="feed">' + S.feed.map(l =>
+      '<li>' + (l.who ? '<span class="who">' + esc(l.who) + '</span> ' : '') + '<span class="note">' + esc(l.note) + '</span>'
+      + (l.delta ? ' <span class="delta ' + (l.delta[0] === '+' ? 'up' : 'dn') + '">' + esc(l.delta) + '</span>' : '') + '</li>').join('') + '</ul>';
+  } else {
+    html += '<p class="sub">The griddle warms. The first week of the rest of this place starts when you do.</p>';
+  }
+  const chatted = S.chattedWeek === S.week;
+  html += '<div class="btnrow"><button class="btn quiet" data-a="chat"' + (chatted ? ' disabled' : '') + '>'
+    + (chatted ? 'You talked with ' + esc(S.lastChat || 'a regular') + ' this week' : 'Spend the slow hour with a regular') + '</button></div></div>';
+
+  // suppliers & practices — full bandwidth: you can see all of it
+  html += '<div class="card"><h2>Suppliers & the way you do things</h2>';
+  QUALITY_ATTRS.forEach(a => { html += tierRowsHTML(a); });
+  html += '</div>';
+
+  // upgrades
+  const ups = [
+    { id: 'griddle', name: 'A second griddle', cost: 900, desc: 'Capacity +50%.' },
+    { id: 'awning', name: 'The striped awning', cost: 350, desc: 'The corner looks like itself again. Walk-ins up.' },
+    { id: 'flyers', name: 'Flyers on the notice boards', cost: 120, desc: 'Walk-ins up a little. Regulars won’t care.' },
+  ];
+  if (S.upgrades.griddle) ups.push({ id: 'griddle2', name: 'A third burner', cost: 1400, desc: 'Capacity +35%. The Saturday line moves.' });
+  if (S.mayaOffered && !S.upgrades.apprentice) ups.push({ id: 'apprentice', name: 'Ask Maya about Thursdays', cost: 0, desc: fm$(260) + '/wk · capacity +40% · she already knows the order of operations.' });
+  const avail = ups.filter(u => !S.upgrades[u.id]);
+  if (avail.length){
+    html += '<div class="card"><h2>Improvements</h2>';
+    avail.forEach(u => {
+      html += '<div class="optrow"><div class="grow"><span class="oname">' + esc(u.name) + '</span>'
+        + '<div class="odesc">' + esc(u.desc) + '</div></div>'
+        + '<div class="ocost">' + (u.cost ? fm$(u.cost) : 'wage') + '<br><button class="btn small quiet" data-a="buy" data-u="' + u.id + '"' + (S.cash < u.cost ? ' disabled' : '') + '>do it</button></div></div>';
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="actionbar"><div class="inner">'
+    + (S.resolving
+      ? '<button class="btn resolving" disabled aria-live="polite">The week passes…</button>'
+      : '<button class="btn" data-a="endWeek">End the week →</button>')
+    + '</div></div>';
+  return html;
+}
+
+/* ---- acts 2 & 3: the dashboard, then the terminal ---- */
+function scaleScreen(){
+  const lw = S.lastWeek || { units: 0, net: 0, revenue: 0, retention: 0.5 };
+  const n = storeCount();
+  const a3 = S.act === 3;
+  let html = '';
+
+  html += '<div class="topbar"><span class="brand">' + (a3 ? 'SGT · Systemwide' : 'Same Great Taste — Stores') + '</span>'
+    + '<span class="stat">' + weekLabelHTML(S.week) + '</span>'
+    + '<button class="btn small quiet" data-a="pause">' + (S.paused ? '▶ resume' : '❚❚ pause') + '</button>'
+    + audioControlsHTML()
+    + '<button class="btn small quiet" data-a="settings" aria-label="Settings">⋯</button>'
+    + (S.devFF ? '<span class="stat">⏩</span>' : '')
+    + '</div>';
+
+  // week-over-week: act 3 reads in percentages
+  let wow = null;
+  if (a3 && S.history.length > 2){
+    const prev = S.history[S.history.length - 2];
+    if (prev && prev.units > 0) wow = (lw.units / prev.units - 1) * 100;
+  }
+  html += '<div class="kpis">'
+    + kpi(a3 ? 'Locations' : 'Stores', nk('stores', n, 'n'))
+    + kpi('Units / wk', nk('units', lw.units, 'n'), wow != null ? (wow >= 0 ? '+' : '−') + Math.abs(wow).toFixed(1) + '% wk/wk' : null, wow != null && wow >= 0 ? 'up' : 'dn')
+    + kpi('Net / wk', nk('net', lw.net, '$'), null, lw.net >= 0 ? 'up' : 'dn')
+    + kpi('Cash', nk('cash', S.cash, '$'))
+    + (a3 ? kpi('COGS', nk('cogs', unitCost() / S.price * 100, 'pct'), fm$(unitCost()) + ' / ' + fm$(S.price))
+          : kpi('Retention', nk('ret', (lw.retention || 0.5) * 100, 'pct')))
+    + kpi('Brand trust', nk('brand', Math.round(S.brand || 62), 'i'), S.sponsored ? 'certified seal' : null, 'up')
+    + (a3 ? kpi('Valuation', nk('val', S.valuation || 0, '$')) : '')
+    + '</div>';
+
+  // throughput graph
+  const hist = S.history.slice(-28);
+  if (hist.length > 2){
+    const mx = Math.max.apply(null, hist.map(h => h.units));
+    html += '<div class="card"><h2>' + (a3 ? 'Systemwide throughput' : 'Weekly units') + '</h2>'
+      + '<div class="chart" role="img" aria-label="Weekly units, recent weeks">'
+      + hist.map(h => '<div class="bar" style="height:' + Math.max(4, Math.round(h.units / mx * 70)) + 'px"></div>').join('')
+      + '</div><div class="chart-legend"><span>' + fmN(hist[0].units) + ' → ' + nk('chartlast', hist[hist.length - 1].units, 'n') + ' units/wk</span></div></div>';
+  }
+
+  // act 3: IPO track (bar renders at its previous width; postRender eases it forward)
+  if (a3){
+    const p = Math.min(100, Math.round((S.valuation || 0) / CFG.ipoValuation * 100));
+    html += '<div class="card"><h2>Enterprise value <span class="h-note">listing window at ' + fm$(CFG.ipoValuation) + '</span></h2>'
+      + '<div style="background:var(--card2);border:1px solid var(--line);border-radius:8px;height:14px;overflow:hidden">'
+      + '<div class="ipo-fill" data-w="' + p + '" style="height:100%;width:' + (IPO_W != null ? IPO_W : p) + '%;background:var(--accent)"></div></div>'
+      + '<div class="small muted" style="margin-top:4px">' + nk('valbar', S.valuation || 0, '$') + ' · ' + nk('valpct', p, 'pct') + '</div></div>';
+  }
+
+  html += menuCardHTML();
+
+  // marketing — the spreadsheet, in the open
+  const perStore = S.marketing / n;
+  const mkPerK = Math.max(1, Math.round(perThousand('marketing')));
+  html += '<div class="card"><h2>' + (a3 ? 'Marketing (auto-funded by allocator)' : 'Marketing') + '</h2>'
+    + '<div class="sliderrow"><label for="mkt">' + (a3 ? 'Spend' : 'Budget') + '</label>'
+    + '<input id="mkt" type="range" min="0" max="' + (CFG.marketingMax * n) + '" step="' + CFG.marketingStep + '" value="' + S.marketing + '" data-r="marketing"' + (a3 ? ' disabled' : '') + '>'
+    + '<span class="val">' + nk('mkt', S.marketing, '$') + '/wk</span></div>'
+    + '<div class="per-dollar">per extra $1k/wk · new customers: +' + nk('mkperk', mkPerK, 'i') + '/wk · '
+    + (a3 ? 'loyalty cohort: +0/wk' : 'loyalty cohort: ≈ +0/wk') + '</div>'
+    + (a3 ? '<div class="small muted">Campaign: “Same Great Taste — now in ' + fmN(n) + ' neighborhoods.”</div>'
+          : '<div class="small muted">Radio, bus sides, the phone book. Reaches people who have never stood at your counter.</div>')
+    + '</div>';
+
+  // printed claims — legible, cheap, and fully honest as far as they go
+  if (S.claimsUnlocked){
+    html += '<div class="card"><h2>' + (a3 ? 'Label claims' : 'Printed claims') + ' <span class="h-note">stay printed only while inputs back them</span></h2>';
+    Object.keys(CLAIMS).forEach(c => {
+      const cl = CLAIMS[c];
+      if (c === 'zerotf' && !S.oilReformAvailable && !S.legible.oil) return;
+      const on = S.claims.includes(c);
+      const ok = cl.req(S);
+      html += '<div class="spread small" style="padding:3px 0"><span>“' + esc(cl.name) + '”'
+        + (on && !ok ? ' <span class="tag">not currently true — unprinted</span>' : '') + '</span>'
+        + '<button class="btn small ' + (on ? '' : 'quiet') + '" data-a="claim" data-c="' + c + '"' + (!on && !ok ? ' disabled' : '') + '>'
+        + (on ? 'printed' : ok ? 'print it' : 'inputs don’t back it') + '</button></div>';
+    });
+    html += '</div>';
+  }
+
+  // procurement
+  html += '<div class="card"><h2>' + (a3 ? 'Procurement · SKU schedule' : 'Procurement policy') + '</h2>';
+  QUALITY_ATTRS.forEach(a => { html += tierRowsHTML(a); });
+  html += '</div>';
+
+  if (!a3){
+    // the stores, line by line — itemization carries per-store detail while it lasts
+    if (itemization01() > 0.3){
+      html += '<div class="card"><h2>The stores</h2><div class="tblwrap"><table class="tbl">'
+        + '<thead><tr><th>Store</th><th class="num">Units / wk</th><th class="num">vs last wk</th></tr></thead><tbody>'
+        + S.stores.map(st => {
+          const d = st.units - (st.prev || st.units);
+          return '<tr><td class="t">Store #' + st.id + (st.id === 1 ? ' <span class="muted small">(the stand)</span>' : '') + '</td>'
+            + '<td class="num">' + nk('st' + st.id, st.units, 'i') + '</td>'
+            + '<td class="num" style="color:var(--' + (d >= 0 ? 'good' : 'bad') + ')">' + nk('std' + st.id, d, 'd') + '</td></tr>';
+        }).join('')
+        + '</tbody></table></div></div>';
+    }
+
+    // act 2 ops
+    html += '<div class="card"><h2>Operations</h2>';
+    html += '<div class="optrow"><div class="grow"><span class="oname">Open Store #' + (n + 1) + '</span>'
+      + '<div class="odesc">Fit-out ' + fm$(CFG.storeBuildCost) + ' · note ' + fm$(CFG.storeLoanWeekly) + '/wk · manager included</div></div>'
+      + '<div class="ocost"><button class="btn small" data-a="openStore"' + (S.cash < CFG.storeBuildCost ? ' disabled' : '') + '>open</button></div></div>';
+    if (S.sop < 1){
+      html += '<div class="optrow"><div class="grow"><span class="oname">Standard operating procedures</span>'
+        + '<div class="odesc">Every store makes it the same way, every time. Variance down, retention up.</div></div>'
+        + '<div class="ocost">' + fm$(6000) + '<br><button class="btn small quiet" data-a="buySop"' + (S.cash < 6000 ? ' disabled' : '') + '>roll out</button></div></div>';
+    }
+    if (S.testing < 1){
+      html += '<div class="optrow"><div class="grow"><span class="oname">Supplier testing program</span>'
+        + '<div class="odesc">Scheduled batch testing at volume. Incident probability down ' + Math.round(CFG.testingProgramCut * 50) + '%.</div></div>'
+        + '<div class="ocost">' + fm$(12000) + '<br><button class="btn small quiet" data-a="buyTesting"' + (S.cash < 12000 ? ' disabled' : '') + '>fund</button></div></div>';
+    }
+    html += '</div>';
+
+    // the counter, fading
+    const weeksIn = S.week - S.act2StartWeek;
+    html += '<div class="card"><h2>Store #1 <span class="h-note">the original counter</span></h2>'
+      + '<div class="spread small"><span>Loyalty cohort retention</span><b class="mono">' + nk('ret1', (lw.retention || 0.5) * 100, 'pct') + '</b></div>';
+    const EARLY_NOTES = ['You stopped by Thursday. Rosa waved from the corner table without looking up from the crossword.', 'You stopped by Thursday. Dot told the new manager exactly how to cut her Classic in half. He wrote it down.', 'You stopped by Thursday. Sam & Jo were splitting fries at the counter. The manager already knew their order.'];
+    const LATE_NOTES = ['No time to stop by this week.', 'The manager’s Thursday note includes a doodle of the awning.', 'The week arrives as a one-page report. It is a good report.'];
+    if (weeksIn <= 5){
+      html += '<p class="sub" style="margin-top:6px">' + esc(EARLY_NOTES[S.week % EARLY_NOTES.length]) + '</p>';
+    } else if (weeksIn <= 12){
+      html += '<p class="sub" style="margin-top:6px">' + esc(LATE_NOTES[S.week % LATE_NOTES.length]) + '</p>';
+    }
+    html += '</div>';
+  } else {
+    // act 3 allocator
+    html += '<div class="card"><h2>Free cash flow allocator</h2>';
+    [['expand', 'Expansion'], ['marketing', 'Marketing'], ['ops', 'Ops & QA']].forEach(pair => {
+      html += '<div class="sliderrow"><label for="al-' + pair[0] + '">' + pair[1] + '</label>'
+        + '<input id="al-' + pair[0] + '" type="range" min="0" max="100" step="5" value="' + S.alloc[pair[0]] + '" data-r="alloc" data-k="' + pair[0] + '">'
+        + '<span class="val">' + S.alloc[pair[0]] + '%</span></div>';
+    });
+    const per = CFG.act3ExpandCostPerStore;
+    html += '<div class="per-dollar">expansion pool ' + nk('pool', S.expandPool || 0, '$') + ' / ' + fm$(per) + ' → next location</div>';
+    html += '</div>';
+
+    if (S.sponsored){
+      html += '<div class="card"><h2>Compliance</h2><div class="spread small"><span>Uniform Safety & Compliance Standard — co-sponsor</span><span class="tag on">seal on every door</span></div>'
+        + '<div class="small muted" style="margin-top:4px">Audit pass rate 99.2% · market conditions: independent segment consolidating</div></div>';
+    }
+  }
+  return html;
+}
+
+/* ---- credits, cards, the sentence ---- */
+function creditsScreen(){
+  let html = '<div class="credits">';
+  if (S.ended === 'scale'){
+    html += '<h1>Same Great Taste</h1>'
+      + '<p class="center muted small" style="margin-bottom:14px">Year 1 · Year ' + Math.max(2, Math.floor((S.week - 1) / 52) + 1) + '</p>'
+      + '<div class="menus-compare">'
+      + '<div><div class="yr">Year 1</div>' + menuCardHTML(S.finePrintY1 ? S.finePrintY1.fp : null, S.finePrintY1 ? S.finePrintY1.price : CFG.startPrice) + '</div>'
+      + '<div><div class="yr">Year ' + Math.max(2, Math.floor((S.week - 1) / 52) + 1) + '</div>' + menuCardHTML() + '</div>'
+      + '</div>'
+      + '<p class="center muted small" style="margin:10px 0 16px">Same name. Same photo. Same great taste.</p>';
+  } else {
+    html += '<h1>Cast, in order of appearance</h1>'
+      + '<div class="card" style="max-height:46vh;overflow-y:auto"><ul class="feed">'
+      + S.regulars.map(r => '<li><span class="who">' + esc(r.name) + '</span> <span class="note">— ' + esc(r.tag) + '</span></li>').join('')
+      + '</ul></div>'
+      + '<p class="center muted small" style="margin:10px 0 16px">and The Classic, as itself</p>';
+  }
+  html += '<div class="center"><button class="btn" data-a="toEndcard">Continue →</button>'
+    + '<div class="audioctl-row">' + audioControlsHTML() + '</div></div></div>';
+  return html;
+}
+
+function endcardScreen(){
+  const scale = S.ended === 'scale';
+  const year = Math.max(1, Math.floor((S.week - 1) / 52) + 1);
+  const verify = scale ? verifiableCount() : 9;
+  const annualRev = S.lastWeek ? S.lastWeek.revenue * 52 : 0;
+  let card = '<div class="endcard ' + (scale ? 'scale' : 'local') + '">'
+    + '<div class="ec-brand">Same Great Taste</div>'
+    + '<div class="ec-title">' + (scale ? 'The Company' : 'The Stand') + '</div>'
+    + '<svg role="img" aria-label="The Classic burger" viewBox="0 0 240 210"><use href="#burger-art"/></svg>'
+    + '<div class="ec-lines">';
+  if (scale){
+    card += '<div class="ec-line"><span>Listed</span><b>NYSE : SGT</b></div>'
+      + '<div class="ec-line"><span>Valuation</span><b>' + fm$(S.valuation) + '</b></div>'
+      + '<div class="ec-line"><span>Locations</span><b>' + fmN(storeCount()) + '</b></div>'
+      + '<div class="ec-line"><span>Years</span><b>' + year + '</b></div>';
+  } else {
+    card += '<div class="ec-line"><span>Counters</span><b>one</b></div>'
+      + '<div class="ec-line"><span>Regulars, by name</span><b>' + S.regulars.length + '</b></div>'
+      + '<div class="ec-line"><span>A year at the stand</span><b>' + fm$(annualRev) + '</b></div>'
+      + '<div class="ec-line"><span>Years</span><b>' + year + '</b></div>';
+  }
+  card += '</div>'
+    + '<div class="ec-verify">Attributes your customers<br>could verify<br><b>9 → ' + verify + '</b></div>'
+    + '<div class="ec-seed">run ' + esc(S.seed) + '</div>'
+    + '</div>';
+  return '<div class="endcard-wrap">' + card + '</div>'
+    + '<div class="center" style="padding-bottom:30px">'
+    + '<button class="btn ghost" data-a="share">Share this run</button> '
+    + '<button class="btn" data-a="toSentence">One more thing →</button>'
+    + '<div class="audioctl-row">' + audioControlsHTML() + '</div></div>';
+}
+
+function sentenceScreen(){
+  return '<div class="sentence-screen">'
+    + '<p class="the-sentence">A market delivers whatever its customers can check, and distance decides what can be checked.</p>'
+    + '<p class="the-pattern"><b>unchecked drift</b> — quality slides only where no one can check.</p>'
+    + '<div class="btnrow" style="max-width:320px;margin-top:26px">'
+    + '<button class="btn ghost" data-a="share">Share this run</button>'
+    + '<button class="btn ghost" data-a="sandbox">Keep playing</button>'
+    + '<button class="btn" data-a="restart">New run</button>'
+    + '</div>'
+    + '<div class="audioctl-row">' + audioControlsHTML() + '</div></div>';
+}
+
+/* ---- share ---- */
+function shareText(){
+  const scale = S.ended === 'scale';
+  const verify = scale ? verifiableCount() : 9;
+  const lines = ['SAME GREAT TASTE — ' + (scale ? 'The Company' : 'The Stand')];
+  if (scale){ lines.push('NYSE:SGT · ' + fm$(S.valuation) + ' · ' + fmN(storeCount()) + ' locations'); }
+  else { lines.push('One counter · ' + S.regulars.length + ' regulars by name'); }
+  lines.push('Attributes your customers could verify: 9 → ' + verify);
+  lines.push('run ' + S.seed);
+  return lines.join('\n');
+}
+function doShare(){
+  const txt = shareText();
+  const done = () => toast('End card copied.');
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { toast('Copy this: ' + txt); }
+    document.body.removeChild(ta);
+  };
+  try {
+    const scale = S.ended === 'scale';
+    const cv = document.createElement('canvas'); cv.width = 540; cv.height = 940;
+    const g = cv.getContext('2d');
+    g.fillStyle = scale ? '#101722' : '#fdf6e7'; g.fillRect(0, 0, 540, 940);
+    g.fillStyle = scale ? '#e8edf5' : '#3b2f24';
+    g.textAlign = 'center';
+    g.font = '600 20px system-ui'; g.fillText('SAME GREAT TASTE', 270, 90);
+    g.font = '700 40px Georgia'; g.fillText(scale ? 'The Company' : 'The Stand', 270, 150);
+    g.font = '24px system-ui';
+    const l2 = scale ? (fm$(S.valuation) + ' · ' + fmN(storeCount()) + ' locations') : ('One counter · ' + S.regulars.length + ' regulars by name');
+    g.fillText(l2, 270, 330);
+    g.font = '26px system-ui';
+    g.fillText('Attributes your customers', 270, 560);
+    g.fillText('could verify', 270, 596);
+    g.font = '700 64px Georgia';
+    g.fillText('9 → ' + (S.ended === 'scale' ? verifiableCount() : 9), 270, 690);
+    g.font = '16px monospace'; g.globalAlpha = 0.6;
+    g.fillText('run ' + S.seed, 270, 880);
+    if (navigator.clipboard && window.ClipboardItem){
+      cv.toBlob(blob => {
+        if (!blob){ navigator.clipboard.writeText(txt).then(done, fallback); return; }
+        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob, 'text/plain': new Blob([txt], { type: 'text/plain' }) })])
+          .then(done)
+          .catch(() => navigator.clipboard.writeText(txt).then(done, fallback));
+      });
+    } else if (navigator.clipboard){ navigator.clipboard.writeText(txt).then(done, fallback); }
+    else fallback();
+  } catch (e) {
+    if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done, fallback);
+    else fallback();
+  }
+}
+
+/* ---- settings modal ---- */
+EVENTS.settings = {
+  modal: () => ({
+    kicker: 'Back office',
+    title: 'Settings',
+    body: '<p class="small muted">Run seed: <span class="mono">' + esc(S.seed) + '</span> · ' + esc(weekLabel(S.week)) + '</p>',
+    choices: [
+      { id: 'party', name: 'Celebrations: ' + (S.celebrations !== false ? 'on' : 'off'), desc: 'Confetti, fanfares, floaters. The numbers stay readable either way.' },
+      { id: 'ff', name: (S.devFF ? 'Disable' : 'Enable') + ' fast-forward', desc: 'Dev speed: weeks pass ' + CFG.devFFMult + '× faster. Act 1 weeks auto-run.' },
+      { id: 'reset', name: 'Reset this run', desc: 'Erases the save. The title screen asks you to confirm nothing.' },
+      { id: 'back', name: 'Back', desc: '' },
+    ],
+  }),
+  resolve: (m, c) => {
+    if (c === 'party'){ S.celebrations = S.celebrations === false; toast('Celebrations ' + (S.celebrations !== false ? 'on' : 'off') + '.'); }
+    if (c === 'ff'){ S.devFF = !S.devFF; toast('Fast-forward ' + (S.devFF ? 'on' : 'off') + '.'); }
+    if (c === 'reset'){ clearSave(); S = null; }
+  },
+};
+
+/* ============================================================
+   RENDER + ACTIONS + TICKER + BOOT
+   ============================================================ */
+// remember what had keyboard focus so full re-renders don't drop it to <body>
+function focusSignature(){
+  const el = document.activeElement;
+  if (!el || el === document.body) return null;
+  if (el.id) return '#' + el.id;
+  if (el.dataset && el.dataset.a){
+    let sel = '[data-a="' + el.dataset.a + '"]';
+    ['attr', 'i', 'c', 'u', 'd', 'k'].forEach(k => {
+      if (el.dataset[k] != null) sel += '[data-' + k + '="' + el.dataset[k] + '"]';
+    });
+    return sel;
+  }
+  return null;
+}
+function render(){
+  if (!S){
+    document.body.dataset.act = '1';
+    app.innerHTML = titleScreen();
+    AUDIO.setScene('quiet');
+    ensureTicker();
+    return;
+  }
+  if (!S.finePrintY1) S.finePrintY1 = { fp: finePrintParts(), price: S.price };
+  let act = S.act;
+  if (S.ended === 'local') act = 1;
+  if (S.ended === 'scale') act = 3;
+  document.body.dataset.act = String(act);
+  let html = '';
+  switch (S.screen){
+    case 'act1': html = act1Screen(); break;
+    case 'act2': case 'act3': html = scaleScreen(); break;
+    case 'credits': html = creditsScreen(); break;
+    case 'endcard': html = endcardScreen(); break;
+    case 'sentence': html = sentenceScreen(); break;
+    default: html = act1Screen();
+  }
+  html += modalHTML();
+  const sig = focusSignature();
+  const hadFocus = sig != null;
+  app.innerHTML = html;
+  if (S.modal){
+    // keep the player's place if they had already tabbed within this modal
+    const prior = sig && app.querySelector(sig);
+    if (prior && prior.closest('.modal') && !prior.disabled){ prior.focus(); }
+    else {
+      const first = app.querySelector('.modal .choice:not([disabled])');
+      if (first) first.focus();
+    }
+  } else if (FOCUS_NEXT){
+    const el = app.querySelector(FOCUS_NEXT);
+    if (el && !el.disabled) el.focus();
+  } else if (hadFocus){
+    let el = sig && app.querySelector(sig);
+    if (!el) el = app.querySelector('.actionbar .btn') || app.querySelector('[data-a]');
+    if (el && !el.disabled) el.focus();
+  }
+  FOCUS_NEXT = null;
+  postRender();
+  ensureTicker();
+}
+let FOCUS_NEXT = null;
+function resetNumCache(){ Object.keys(NUMC).forEach(k => { delete NUMC[k]; }); }
+
+const ACTIONS = {
+  newRun(el){
+    const inp = document.getElementById('seedin');
+    const seed = inp && inp.value.trim() ? inp.value.trim().toUpperCase() : null;
+    clearSave();
+    resetNumCache();
+    S = newRun(seed);
+    S.finePrintY1 = { fp: finePrintParts(), price: S.price }; // the menu as it was, kept for the credits
+    save(); render();
+    toast('Week one. The griddle is hot.');
+  },
+  continueRun(){
+    const s = loadSave();
+    if (s){
+      S = s;
+      S.resolving = false; // never restore into a mid-resolution state
+      resetNumCache();
+      rng = mulberry32(hashSeed(S.seed) + S.week * 7919);
+      render();
+    } else {
+      toast('No saved run found.');
+      render();
+    }
+  },
+  settings(){ S.modal = { id: 'settings' }; render(); },
+  pause(){ S.paused = !S.paused; render(); },
+  price(el){
+    const d = Number(el.dataset.d);
+    const np = Math.round((S.price + d * 0.25) * 100) / 100;
+    if (np < 1) return;
+    if (d > 0){
+      const overFair = np > fairPrice();
+      S.regulars.forEach(r => { r.trust = Math.max(5, r.trust - CFG.priceRaiseTrustCost * (overFair ? 1 : 0.45)); });
+    }
+    S.price = np;
+    if (S.act === 1) AUDIO.chalk(); // rewriting the board
+    save(); render();
+  },
+  setTier(el){ setTier(el.dataset.attr, Number(el.dataset.i)); save(); render(); },
+  claim(el){
+    const c = el.dataset.c;
+    const i = S.claims.indexOf(c);
+    if (i >= 0) S.claims.splice(i, 1);
+    else if (CLAIMS[c].req(S)) S.claims.push(c);
+    save(); render();
+  },
+  chat(){
+    if (S.chattedWeek === S.week) return;
+    const r = pick(S.regulars);
+    r.trust = Math.min(100, r.trust + CFG.chatTrust);
+    S.chattedWeek = S.week; S.lastChat = r.name;
+    S.feed.unshift({ who: r.name, note: pick(['tells you about the week — the hour goes somewhere good.', 'lingers over coffee. You learn the story behind “' + r.order + '.”', 'says this corner would be different without you. You say likewise.']), delta: '+trust' });
+    save(); render();
+  },
+  buy(el){
+    const u = el.dataset.u;
+    const costs = { griddle: 900, griddle2: 1400, awning: 350, flyers: 120, apprentice: 0 };
+    if (S.cash < costs[u]) return;
+    S.cash -= costs[u];
+    S.upgrades[u] = true;
+    if (u === 'awning') S.walkins += 10;
+    if (u === 'flyers') S.walkins += 6;
+    if (u === 'apprentice') toast('Maya starts Saturday.');
+    save(); render();
+  },
+  endWeek(){
+    if (S.modal || S.resolving) return;
+    const done = () => {
+      S.resolving = false;
+      resolveWeekAct1();
+      AUDIO.paper();
+      setTimeout(() => AUDIO.coin(), 140);
+      FOCUS_NEXT = '[data-a="endWeek"]'; // keyboard players keep their place across the beat
+      save(); render();
+    };
+    if (RM.matches){ done(); return; } // reduced motion: the week resolves instantly
+    S.resolving = true;
+    render();
+    setTimeout(done, CFG.resolveMs);
+  },
+  mute(){
+    AUDIO.setMuted(!AUDIO.muted);
+    render();
+  },
+  choose(el){
+    const m = S.modal;
+    if (!m) return;
+    resolveModal(m, el.dataset.c);
+    if (!S){ render(); return; } // reset from settings
+    closeModal();
+  },
+  openStore(){
+    if (S.cash < CFG.storeBuildCost) return;
+    S.cash -= CFG.storeBuildCost;
+    S.debtWeekly += CFG.storeLoanWeekly;
+    addStore();
+    toast('Store #' + S.storeCount + ' opens in three weeks’ worth of paperwork, i.e., immediately.');
+    save(); render();
+  },
+  buySop(){ if (S.cash >= 6000 && S.sop < 1){ S.cash -= 6000; S.sop = 1; toast('SOPs rolled out. Every Classic, the same.'); save(); render(); } },
+  buyTesting(){ if (S.cash >= 12000 && S.testing < 1){ S.cash -= 12000; S.testing = 1; toast('Testing program funded.'); save(); render(); } },
+  toEndcard(){ S.screen = 'endcard'; save(); render(); },
+  toSentence(){ S.screen = 'sentence'; save(); render(); },
+  share(){ doShare(); },
+  sandbox(){
+    S.endless = true;
+    S.screen = 'act' + S.act;
+    toast('The run continues. Nothing else is waiting at the end — this part is yours.');
+    save(); render();
+  },
+  restart(){ clearSave(); resetNumCache(); S = null; render(); },
+};
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-a]');
+  if (!el || el.disabled) return;
+  // while a decision is on the table, only the decision is live —
+  // keyboard focus can reach background controls, so guard here too
+  if (S && S.modal && el.dataset.a !== 'choose' && el.dataset.a !== 'mute') return;
+  if (S && S.resolving && el.dataset.a !== 'mute') return;
+  const fn = ACTIONS[el.dataset.a];
+  if (fn){
+    AUDIO.uiClick();
+    fn(el);
+  }
+});
+// keep keyboard focus inside an open modal
+document.addEventListener('keydown', e => {
+  if (!S || !S.modal || e.key !== 'Tab') return;
+  const f = Array.prototype.slice.call(app.querySelectorAll('.modal .choice:not([disabled])'));
+  if (!f.length) return;
+  e.preventDefault();
+  const i = f.indexOf(document.activeElement);
+  const n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i === f.length - 1 ? 0 : i + 1);
+  f[n].focus();
+});
+// don't let auto-tick re-renders interrupt a slider drag
+let POINTER_DRAG = false;
+document.addEventListener('pointerdown', e => {
+  if (e.target && e.target.matches && e.target.matches('input[type=range]')) POINTER_DRAG = true;
+});
+document.addEventListener('pointerup', () => { POINTER_DRAG = false; });
+document.addEventListener('pointercancel', () => { POINTER_DRAG = false; });
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (!el.dataset || !el.dataset.r) return;
+  if (el.dataset.r === 'vol'){ AUDIO.setVol(Number(el.value) / 100); return; }
+  if (!S) return;
+  if (el.dataset.r === 'marketing'){
+    S.marketing = Number(el.value);
+    const lab = el.parentNode.querySelector('.val');
+    if (lab) lab.textContent = fm$(S.marketing) + '/wk';
+    save();
+  } else if (el.dataset.r === 'alloc'){
+    const k = el.dataset.k;
+    S.alloc[k] = Number(el.value);
+    const lab = el.parentNode.querySelector('.val');
+    if (lab) lab.textContent = S.alloc[k] + '%';
+  }
+});
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (!el || !el.dataset || !el.dataset.r || !S) return;
+  if (el.dataset.r === 'marketing'){ render(); }
+  else if (el.dataset.r === 'alloc'){
+    const k = el.dataset.k;
+    S.alloc[k] = Number(el.value);
+    const keys = ['expand', 'marketing', 'ops'];
+    const others = keys.filter(x => x !== k);
+    const rest = 100 - S.alloc[k];
+    const sumOthers = others.reduce((t, x) => t + S.alloc[x], 0) || 1;
+    S.alloc[others[0]] = Math.round(rest * S.alloc[others[0]] / sumOthers / 5) * 5;
+    S.alloc[others[1]] = Math.max(0, rest - S.alloc[others[0]]);
+    save(); render();
+  }
+});
+
+/* ---- ticker ---- */
+function stopTicker(){ if (tickTimer){ clearInterval(tickTimer); tickTimer = null; } }
+function ensureTicker(){
+  stopTicker();
+  if (!S || S.ended && !S.endless) return;
+  if (S.screen === 'act2' || S.screen === 'act3'){
+    const base = S.act === 3 ? CFG.act3TickMs : CFG.act2TickMs;
+    const ms = S.devFF ? Math.max(120, base / CFG.devFFMult) : base;
+    tickTimer = setInterval(() => {
+      if (S.modal || S.paused || document.hidden) return;
+      resolveWeekScale();
+      if (S.week % 5 === 0) save();
+      if (!POINTER_DRAG) render();
+    }, ms);
+  } else if (S.screen === 'act1' && S.devFF){
+    tickTimer = setInterval(() => {
+      if (S.modal || S.resolving || document.hidden) return;
+      resolveWeekAct1();
+      if (S.week % 5 === 0) save();
+      render();
+    }, CFG.act1AutoMs);
+  }
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden && S) render(); });
+
+/* ---- boot ---- */
+(function boot(){
+  // land on the title; if a run is saved, the Continue button picks it up
+  render();
+})();
+</script>
+</body>
+</html>
