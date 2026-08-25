@@ -27,7 +27,7 @@ MANIFEST = GAME / "versions.tsv"
 HEADER = [
     "# id\tdate\tstatus\tnote",
     "# Version ids track the game's own save format (CFG.saveKey: sgt_save_v3 -> v3).",
-    "# status is the badge shown in the listing: playable, beta, or blank.",
+    "# status is the badge shown in the listing: playable, beta, archive, or blank.",
     "# Newest last. tools/release.py rebuilds the listing from this file.",
 ]
 
@@ -78,7 +78,7 @@ def render_listing(rows):
     for r in sorted(rows, key=lambda r: version_sort_key(r["id"]), reverse=True):
         badges = ""
         if r["status"]:
-            cls = "badge " + (r["status"] if r["status"] in ("playable", "beta") else "")
+            cls = "badge " + (r["status"] if r["status"] in ("playable", "beta", "archive") else "")
             badges += f'<span class="{cls.strip()}">{html.escape(r["status"])}</span>'
         here = ' <span class="served">served at /samegreattaste</span>' if r["id"] == served else ""
         items.append(
@@ -101,7 +101,11 @@ def render_listing(rows):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Same Great Taste — versions</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Same Great Taste">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#f5eddd">
 <style>
@@ -134,6 +138,7 @@ def render_listing(rows):
   }}
   .badge.playable{{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}}
   .badge.beta{{color:var(--ink2);background:transparent;border-style:dashed}}
+  .badge.archive{{color:var(--ink2);background:transparent;opacity:.65}}
   .note{{color:var(--ink2);font-size:.92rem;margin-top:.3rem}}
   .meta{{margin-top:.35rem;font-size:.78rem;color:var(--ink2);opacity:.8}}
   .served{{

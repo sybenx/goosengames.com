@@ -4,13 +4,18 @@ Static site, no build step — the repo root *is* the site. Deployed on Cloudfla
 
 ```
 index.html                    landing page: logo, game link, versions link
-logo.svg                      the mark (also the favicon), rounded in the SVG itself
+logo.svg                      the mark, rounded in the SVG itself; the SVG favicon
+favicon.ico                   16+16/32 fallback for browsers without SVG favicons
+apple-touch-icon.png          180px, square — iOS applies its own rounding
+icon-192.png icon-512.png     Android / web manifest
+site.webmanifest              name, colours and icons for Add to Home Screen
 _headers                      Cloudflare response headers
 _redirects                    Cloudflare redirects (old v01/v02 archive URLs)
 .nojekyll                     stops GitHub Pages running Jekyll, if it ever moves
 samegreattaste/
   index.html                  /samegreattaste — the build marked playable
   versions.tsv                manifest: id, date, status, note
+  v0/index.html               /samegreattaste/v0
   v3/index.html               /samegreattaste/v3
   v4/index.html               /samegreattaste/v4
   versions/index.html         /samegreattaste/versions — generated listing
@@ -58,6 +63,25 @@ without taking a snapshot:
 ```bash
 python3 tools/release.py --relist
 ```
+
+## Icons
+
+`logo.svg` is rounded in the file, which is right for a browser tab but wrong
+for a home screen: iOS and Android apply their own mask, and a pre-rounded
+icon gets rounded twice with the background showing through at the corners.
+So the raster icons are generated from a **square, unrounded** copy with an
+explicit opaque backing — iOS also flattens any transparency to black.
+
+The archived game pages carry no icon tags of their own and must not be edited.
+They are covered anyway: browsers fall back to `/favicon.ico` and iOS falls
+back to `/apple-touch-icon.png` at the site root when a page declares neither.
+The manifest is *not* auto-discovered that way, so an Android home-screen save
+made from a game page uses the favicon rather than the 512px icon.
+
+Regenerating them needs a rasteriser. There is none in this repo; they were
+built with macOS `qlmanage` plus `sips`, and `favicon.ico` was assembled by
+hand as an ICO wrapping two PNGs. Note `qlmanage` flattens alpha to white, so
+it is only safe for the square icons, which are opaque by construction.
 
 ## Local preview
 
