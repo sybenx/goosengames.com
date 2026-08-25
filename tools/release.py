@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
-"""Snapshot the live game as an immutable /samegreattaste/vNN archive.
+"""Snapshot a build of the game as an immutable /samegreattaste/vN archive.
 
-  python3 tools/release.py                      # snapshot the current build as the next vNN
-  python3 tools/release.py --note "Adds act 4"  # ...with a note for the listing
-  python3 tools/release.py --id v00 --from ~/old.html --note "No sound, no transitions."
+  python3 tools/release.py --id v5 --status beta --note "..."   # freeze the live build
+  python3 tools/release.py --id v2 --from ~/old.html --note "No sound, no transitions."
+  python3 tools/release.py --relist                             # rebuild the listing only
 
-Snapshots are byte-identical copies, never rewritten, so an archived build
-always behaves exactly as it did on the day it shipped. Both commands also
-regenerate samegreattaste/versions/index.html from versions.tsv.
+Version ids track the game's own save format — a build whose CFG.saveKey is
+'sgt_save_v4' is archived as v4 — so two archives can never read each other's
+saved state.
+
+Snapshots are byte-identical copies and are not edited afterwards, so an
+archived build behaves exactly as it did the day it shipped.
+
+Whichever archive matches samegreattaste/index.html byte for byte is the one
+being served at /samegreattaste; the listing works that out rather than
+assuming it is the newest.
 """
 import argparse, datetime, html, re, shutil, sys
 from pathlib import Path
@@ -17,6 +24,18 @@ GAME = ROOT / "samegreattaste"
 LIVE = GAME / "index.html"
 MANIFEST = GAME / "versions.tsv"
 
+HEADER = [
+    "# id\tdate\tstatus\tnote",
+    "# Version ids track the game's own save format (CFG.saveKey: sgt_save_v3 -> v3).",
+    "# status is the badge shown in the listing: playable, beta, or blank.",
+    "# Newest last. tools/release.py rebuilds the listing from this file.",
+]
+
+
+def version_sort_key(vid):
+    m = re.fullmatch(r"v(\d+)", vid)
+    return (0, int(m.group(1))) if m else (1, 0)
+
 
 def read_manifest():
     rows = []
@@ -24,38 +43,57 @@ def read_manifest():
         for line in MANIFEST.read_text().splitlines():
             if not line.strip() or line.startswith("#"):
                 continue
-            parts = (line.split("\t") + ["", ""])[:3]
-            rows.append({"id": parts[0].strip(), "date": parts[1].strip(),
-                         "note": parts[2].strip()})
+            f = (line.split("\t") + ["", "", ""])[:4]
+            rows.append({"id": f[0].strip(), "date": f[1].strip(),
+                         "status": f[2].strip(), "note": f[3].strip()})
     return rows
 
 
 def write_manifest(rows):
-    rows.sort(key=lambda r: r["id"])
-    out = ["# id\tdate\tnote",
-           "# Newest last. Edit notes freely; tools/release.py rebuilds the listing from this."]
-    out += [f"{r['id']}\t{r['date']}\t{r['note']}" for r in rows]
-    MANIFEST.write_text("\n".join(out) + "\n")
+    rows.sort(key=lambda r: version_sort_key(r["id"]))
+    body = [f"{r['id']}\t{r['date']}\t{r['status']}\t{r['note']}" for r in rows]
+    MANIFEST.write_text("\n".join(HEADER + body) + "\n")
 
 
 def next_id(rows):
     nums = [int(m.group(1)) for r in rows if (m := re.fullmatch(r"v(\d+)", r["id"]))]
-    return f"v{(max(nums) + 1) if nums else 1:02d}"
+    return f"v{(max(nums) + 1) if nums else 1}"
+
+
+def live_id(rows):
+    """Which archive is currently served at /samegreattaste, by content."""
+    if not LIVE.is_file():
+        return None
+    live = LIVE.read_bytes()
+    for r in rows:
+        f = GAME / r["id"] / "index.html"
+        if f.is_file() and f.read_bytes() == live:
+            return r["id"]
+    return None
 
 
 def render_listing(rows):
-    newest = rows[-1]["id"] if rows else None
+    served = live_id(rows)
     items = []
-    for r in reversed(rows):
-        note = html.escape(r["note"]) or "&nbsp;"
-        tag = ' <span class="tag">current</span>' if r["id"] == newest else ""
+    for r in sorted(rows, key=lambda r: version_sort_key(r["id"]), reverse=True):
+        badges = ""
+        if r["status"]:
+            cls = "badge " + (r["status"] if r["status"] in ("playable", "beta") else "")
+            badges += f'<span class="{cls.strip()}">{html.escape(r["status"])}</span>'
+        here = ' <span class="served">served at /samegreattaste</span>' if r["id"] == served else ""
         items.append(
             f'    <li>\n'
-            f'      <a href="/samegreattaste/{r["id"]}">{r["id"]}{tag}</a>\n'
-            f'      <p>{note}</p>\n'
-            f'      <time datetime="{html.escape(r["date"])}">{html.escape(r["date"])}</time>\n'
+            f'      <p class="row"><a href="/samegreattaste/{r["id"]}">{r["id"]}</a>{badges}</p>\n'
+            f'      <p class="note">{html.escape(r["note"]) or "&nbsp;"}</p>\n'
+            f'      <p class="meta"><time datetime="{html.escape(r["date"])}">'
+            f'{html.escape(r["date"])}</time>{here}</p>\n'
             f'    </li>'
         )
+
+    lede = ("Every build that has shipped, kept playable at its own address. "
+            "<a href=\"/samegreattaste\">/samegreattaste</a> serves the build marked playable "
+            "— which is not always the newest one.")
+
     return f"""<!doctype html>
 <!-- Generated by tools/release.py from samegreattaste/versions.tsv. Do not edit by hand. -->
 <html lang="en">
@@ -69,7 +107,7 @@ def render_listing(rows):
 <style>
   /* Act 1 palette, shared with the landing page and the game itself. */
   :root{{
-    --bg:#f5eddd; --card:#fffaf0; --ink:#3b2f24; --ink2:#7a6a56;
+    --bg:#f5eddd; --ink:#3b2f24; --ink2:#7a6a56;
     --line:#e4d6bd; --accent:#a54f22; --accent-ink:#fff6ec;
   }}
   *{{box-sizing:border-box;margin:0;padding:0}}
@@ -85,16 +123,24 @@ def render_listing(rows):
   .lede a{{color:var(--accent)}}
   ul{{list-style:none}}
   li{{padding:1.15rem 0;border-top:1px solid var(--line)}}
-  li a{{color:var(--ink);text-decoration:none;font-size:1.05rem}}
-  li a:hover{{color:var(--accent)}}
-  .tag{{
+  .row{{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem}}
+  .row a{{color:var(--ink);text-decoration:none;font-size:1.05rem}}
+  .row a:hover{{color:var(--accent)}}
+  .badge{{
     font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;
     font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--accent-ink); background:var(--accent); padding:.2rem .45rem;
-    border-radius:4px; vertical-align:.15em; margin-left:.5rem;
+    padding:.2rem .45rem;border-radius:4px;
+    color:var(--ink2); border:1px solid var(--line);
   }}
-  li p{{color:var(--ink2);font-size:.92rem;margin-top:.2rem}}
-  time{{color:var(--ink2);font-size:.78rem;opacity:.8}}
+  .badge.playable{{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}}
+  .badge.beta{{color:var(--ink2);background:transparent;border-style:dashed}}
+  .note{{color:var(--ink2);font-size:.92rem;margin-top:.3rem}}
+  .meta{{margin-top:.35rem;font-size:.78rem;color:var(--ink2);opacity:.8}}
+  .served{{
+    font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;
+    font-size:.7rem;
+  }}
+  .served::before{{content:" · "}}
   .back{{display:inline-block;margin-top:2.5rem;color:var(--ink2);font-size:.9rem}}
   .back:hover{{color:var(--accent)}}
 </style>
@@ -103,12 +149,11 @@ def render_listing(rows):
   <main>
     <a href="/"><img class="mark" src="/logo.svg" alt="Goosen Games"></a>
     <h1>Same Great Taste — versions</h1>
-    <p class="lede">Every build that has shipped, kept playable at its own address.
-      <a href="/samegreattaste">/samegreattaste</a> always serves the current one.</p>
+    <p class="lede">{lede}</p>
     <ul>
 {chr(10).join(items)}
     </ul>
-    <a class="back" href="/samegreattaste">&larr; Play the current build</a>
+    <a class="back" href="/samegreattaste">&larr; Play</a>
   </main>
 </body>
 </html>
@@ -117,9 +162,10 @@ def render_listing(rows):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--id", help="version id to write, e.g. v00 (default: next unused)")
+    ap.add_argument("--id", help="version id, e.g. v5 (default: next unused)")
     ap.add_argument("--from", dest="src", help="source HTML (default: the live build)")
     ap.add_argument("--note", default="", help="one-line description for the listing")
+    ap.add_argument("--status", default="", help="badge: playable, beta, or blank")
     ap.add_argument("--relist", action="store_true",
                     help="only regenerate the listing; take no snapshot")
     a = ap.parse_args()
@@ -133,23 +179,32 @@ def main():
 
         vid = a.id or next_id(rows)
         if not re.fullmatch(r"v\d+", vid):
-            sys.exit(f"version id must look like v01, got {vid!r}")
+            sys.exit(f"version id must look like v4, got {vid!r}")
 
         dest = GAME / vid / "index.html"
         if dest.exists():
             sys.exit(f"{vid} already exists — archives are immutable, pick another id")
 
+        # the id should match the build's own save format
+        key = re.search(r"saveKey: *'sgt_save_(v\d+)'", src.read_text())
+        if key and key.group(1) != vid:
+            print(f"warning: {src.name} uses saveKey sgt_save_{key.group(1)}, "
+                  f"but you are archiving it as {vid}", file=sys.stderr)
+
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, dest)
 
         rows = [r for r in rows if r["id"] != vid]
-        rows.append({"id": vid, "date": datetime.date.today().isoformat(), "note": a.note})
+        rows.append({"id": vid, "date": datetime.date.today().isoformat(),
+                     "status": a.status, "note": a.note})
         write_manifest(rows)
         print(f"archived {src} -> /samegreattaste/{vid}")
 
+    rows = read_manifest()
     (GAME / "versions").mkdir(parents=True, exist_ok=True)
-    (GAME / "versions" / "index.html").write_text(render_listing(read_manifest()))
-    print("rebuilt /samegreattaste/versions")
+    (GAME / "versions" / "index.html").write_text(render_listing(rows))
+    served = live_id(rows)
+    print(f"rebuilt /samegreattaste/versions (serving {served or 'an unarchived build'})")
 
 
 if __name__ == "__main__":

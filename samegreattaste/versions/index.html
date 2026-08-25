@@ -11,7 +11,7 @@
 <style>
   /* Act 1 palette, shared with the landing page and the game itself. */
   :root{
-    --bg:#f5eddd; --card:#fffaf0; --ink:#3b2f24; --ink2:#7a6a56;
+    --bg:#f5eddd; --ink:#3b2f24; --ink2:#7a6a56;
     --line:#e4d6bd; --accent:#a54f22; --accent-ink:#fff6ec;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -27,16 +27,24 @@
   .lede a{color:var(--accent)}
   ul{list-style:none}
   li{padding:1.15rem 0;border-top:1px solid var(--line)}
-  li a{color:var(--ink);text-decoration:none;font-size:1.05rem}
-  li a:hover{color:var(--accent)}
-  .tag{
+  .row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem}
+  .row a{color:var(--ink);text-decoration:none;font-size:1.05rem}
+  .row a:hover{color:var(--accent)}
+  .badge{
     font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;
     font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--accent-ink); background:var(--accent); padding:.2rem .45rem;
-    border-radius:4px; vertical-align:.15em; margin-left:.5rem;
+    padding:.2rem .45rem;border-radius:4px;
+    color:var(--ink2); border:1px solid var(--line);
   }
-  li p{color:var(--ink2);font-size:.92rem;margin-top:.2rem}
-  time{color:var(--ink2);font-size:.78rem;opacity:.8}
+  .badge.playable{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+  .badge.beta{color:var(--ink2);background:transparent;border-style:dashed}
+  .note{color:var(--ink2);font-size:.92rem;margin-top:.3rem}
+  .meta{margin-top:.35rem;font-size:.78rem;color:var(--ink2);opacity:.8}
+  .served{
+    font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;
+    font-size:.7rem;
+  }
+  .served::before{content:" · "}
   .back{display:inline-block;margin-top:2.5rem;color:var(--ink2);font-size:.9rem}
   .back:hover{color:var(--accent)}
 </style>
@@ -45,21 +53,20 @@
   <main>
     <a href="/"><img class="mark" src="/logo.svg" alt="Goosen Games"></a>
     <h1>Same Great Taste — versions</h1>
-    <p class="lede">Every build that has shipped, kept playable at its own address.
-      <a href="/samegreattaste">/samegreattaste</a> always serves the current one.</p>
+    <p class="lede">Every build that has shipped, kept playable at its own address. <a href="/samegreattaste">/samegreattaste</a> serves the build marked playable — which is not always the newest one.</p>
     <ul>
     <li>
-      <a href="/samegreattaste/v02">v02 <span class="tag">current</span></a>
-      <p>Current build. Save format sgt_save_v4.</p>
-      <time datetime="2026-08-24">2026-08-24</time>
+      <p class="row"><a href="/samegreattaste/v4">v4</a><span class="badge beta">beta</span></p>
+      <p class="note">Ends far past the stand, on a much larger stage. Unfinished in places.</p>
+      <p class="meta"><time datetime="2026-08-24">2026-08-24</time></p>
     </li>
     <li>
-      <a href="/samegreattaste/v01">v01</a>
-      <p>First deploy. Save format sgt_save_v3.</p>
-      <time datetime="2026-08-24">2026-08-24</time>
+      <p class="row"><a href="/samegreattaste/v3">v3</a><span class="badge playable">playable</span></p>
+      <p class="note">Ends where it started — with the burger itself, and what became of it.</p>
+      <p class="meta"><time datetime="2026-08-24">2026-08-24</time> <span class="served">served at /samegreattaste</span></p>
     </li>
     </ul>
-    <a class="back" href="/samegreattaste">&larr; Play the current build</a>
+    <a class="back" href="/samegreattaste">&larr; Play</a>
   </main>
 </body>
 </html>

@@ -3,58 +3,61 @@
 Static site, no build step — the repo root *is* the site. Deployed on Cloudflare Pages.
 
 ```
-index.html                    landing page: logo, centered, nothing else
-logo.svg                      the mark (also the favicon)
+index.html                    landing page: logo, game link, versions link
+logo.svg                      the mark (also the favicon), rounded in the SVG itself
 _headers                      Cloudflare response headers
+_redirects                    Cloudflare redirects (old v01/v02 archive URLs)
 .nojekyll                     stops GitHub Pages running Jekyll, if it ever moves
 samegreattaste/
-  index.html                  /samegreattaste — the current build
-  versions.tsv                version manifest (id, date, note)
-  v01/index.html              /samegreattaste/v01 — frozen snapshot
+  index.html                  /samegreattaste — the build marked playable
+  versions.tsv                manifest: id, date, status, note
+  v3/index.html               /samegreattaste/v3
+  v4/index.html               /samegreattaste/v4
   versions/index.html         /samegreattaste/versions — generated listing
 tools/
-  release.py                  snapshots the current build as the next vNN
+  release.py                  archives a build and rebuilds the listing
 ```
 
 ## Versioned builds
 
-`/samegreattaste` always serves the newest build. Every build that has shipped
-also keeps its own permanent address — `/samegreattaste/v01`, `/samegreattaste/v02`
-— so an old one stays playable after the live one moves on.
+Every build that has shipped keeps its own permanent address, so an old one
+stays playable after the live one moves on.
 
-Snapshots are byte-identical copies and are never edited afterwards, so an
+**Version ids track the game's own save format.** A build whose `CFG.saveKey` is
+`sgt_save_v4` is archived as `v4`. All versions share one origin and therefore
+one `localStorage`, so this is what stops two archives reading each other's
+saved state — `release.py` warns if an id and a save key disagree.
+
+**`/samegreattaste` serves the build marked `playable`, which is not always the
+newest.** v4 is further along but unfinished, so v3 is what a visitor gets; v4
+is opt-in at its own URL, badged `beta`. To change which build is served, copy
+it over `samegreattaste/index.html` and run `--relist` — the listing works out
+what is being served by comparing bytes, so it cannot fall out of sync.
+
+Snapshots are byte-identical copies and are not edited afterwards, so an
 archived build behaves exactly as it did the day it shipped.
 
-**Shipping an update:** edit `samegreattaste/index.html` as usual, then freeze
-what you just replaced *before* you overwrite it — or, more simply, snapshot the
-new build right after you finish it:
+**Archiving a build:**
 
 ```bash
-python3 tools/release.py --note "Adds act 4 and the closing-time ending"
+python3 tools/release.py --id v5 --status beta --note "Adds the closing-time ending"
 ```
 
-That copies `samegreattaste/index.html` to the next unused `vNN/`, appends a row
-to `versions.tsv`, and rebuilds the listing page.
-
-**Importing an older build** that predates this setup:
+That copies `samegreattaste/index.html` into `v5/`, appends a row to
+`versions.tsv`, and rebuilds the listing. Add `--from <path>` to archive some
+other file instead of the live one — that is how an older build gets imported:
 
 ```bash
-python3 tools/release.py --id v00 --from ~/Downloads/sgt-old.html --note "No sound, no transitions."
+python3 tools/release.py --id v2 --from ~/Downloads/sgt-old.html \
+  --note "No sound, no transitions."
 ```
 
-**After only editing notes in `versions.tsv`**, rebuild the listing without
-taking a snapshot:
+**After editing notes or statuses in `versions.tsv`**, rebuild the listing
+without taking a snapshot:
 
 ```bash
 python3 tools/release.py --relist
 ```
-
-### One caveat: saves are shared
-
-All versions run on the same origin, so they share one `localStorage`. The game
-already namespaces its keys (`sgt_save_v4`, `sgt_audio_v1`) — keep bumping the
-number in `CFG.saveKey` whenever the save format changes, or a v01 save will be
-read by v02 and misinterpreted.
 
 ## Local preview
 
