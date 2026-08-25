@@ -5,7 +5,7 @@ Static site, no build step — the repo root *is* the site. Deployed on Cloudfla
 ```
 index.html                    landing page: logo, game link, versions link
 logo.svg                      the mark, rounded in the SVG itself; the SVG favicon
-favicon.ico                   16+16/32 fallback for browsers without SVG favicons
+favicon.ico                   16/32 fallback for browsers without SVG favicons
 apple-touch-icon.png          180px, square — iOS applies its own rounding
 icon-192.png icon-512.png     Android / web manifest
 site.webmanifest              name, colours and icons for Add to Home Screen
@@ -19,6 +19,7 @@ samegreattaste/
   v4/index.html               /samegreattaste/v4
   versions/index.html         /samegreattaste/versions — generated listing
 tools/
+  round_png.py                rounds PNG corners with real alpha (stdlib only)
   release.py                  archives a build and rebuilds the listing
 ```
 
@@ -77,10 +78,20 @@ back to `/apple-touch-icon.png` at the site root when a page declares neither.
 The manifest is *not* auto-discovered that way, so an Android home-screen save
 made from a game page uses the favicon rather than the 512px icon.
 
+`favicon.ico` is rounded to match `logo.svg`, because nothing masks a browser
+tab icon — a square one there looked wrong next to the rounded SVG on pages
+that use it. The touch and Android icons stay square: those *are* masked.
+
+The archived game pages declare no icon and fall back to `/favicon.ico`, so
+that file is the only favicon they can ever show. It has to match the SVG or
+the tab icon changes as you move between the landing page and the game.
+
 Regenerating them needs a rasteriser. There is none in this repo; they were
 built with macOS `qlmanage` plus `sips`, and `favicon.ico` was assembled by
 hand as an ICO wrapping two PNGs. Note `qlmanage` flattens alpha to white, so
-it is only safe for the square icons, which are opaque by construction.
+it cannot produce transparent rounded corners at all — it renders them white.
+`tools/round_png.py` masks the alpha of a square render instead, which is how
+the rounded favicon gets made.
 
 ## If an asset serves the wrong thing
 

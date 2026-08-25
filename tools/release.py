@@ -102,7 +102,7 @@ def render_listing(rows):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Same Great Taste — versions</title>
 <link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="icon" href="/logo.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Same Great Taste">
@@ -152,7 +152,7 @@ def render_listing(rows):
 </head>
 <body>
   <main>
-    <a href="/"><img class="mark" src="/logo.svg" alt="Goosen Games"></a>
+    <a href="/"><img class="mark" src="/logo.svg?v=2" alt="Goosen Games"></a>
     <h1>Same Great Taste — versions</h1>
     <p class="lede">{lede}</p>
     <ul>
