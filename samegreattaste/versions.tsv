@@ -1,3 +1,4 @@
 # id	date	note
 # Newest last. Edit notes freely; tools/release.py rebuilds the listing from this.
-v01	2026-08-24	First public build. Sound and act transitions.
+v01	2026-08-24	First deploy. Save format sgt_save_v3.
+v02	2026-08-24	Current build. Save format sgt_save_v4.
