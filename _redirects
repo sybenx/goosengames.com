@@ -2,3 +2,7 @@
 # before ids were aligned to the game's save format. Keep those URLs alive.
 /samegreattaste/v01  /samegreattaste/v3  301
 /samegreattaste/v02  /samegreattaste/v4  301
+
+# v0 (the earliest, unplayable cut) was published briefly, then dropped.
+# It lives on in git history only. Send any stale link to the listing.
+/samegreattaste/v0  /samegreattaste/versions  301

@@ -15,7 +15,6 @@ _redirects                    Cloudflare redirects (old v01/v02 archive URLs)
 samegreattaste/
   index.html                  /samegreattaste — the build marked playable
   versions.tsv                manifest: id, date, status, note
-  v0/index.html               /samegreattaste/v0
   v3/index.html               /samegreattaste/v3
   v4/index.html               /samegreattaste/v4
   versions/index.html         /samegreattaste/versions — generated listing

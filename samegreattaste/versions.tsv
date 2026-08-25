@@ -2,6 +2,5 @@
 # Version ids track the game's own save format (CFG.saveKey: sgt_save_v3 -> v3).
 # status is the badge shown in the listing: playable, beta, archive, or blank.
 # Newest last. tools/release.py rebuilds the listing from this file.
-v0	2026-08-24	archive	The earliest cut: no sound, no transitions, and essentially unplayable. Kept for the record.
 v3	2026-08-24	playable	Ends where it started — with the burger itself, and what became of it.
 v4	2026-08-24	beta	Ends far past the stand, on a much larger stage. Unfinished in places.
