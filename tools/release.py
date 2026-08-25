@@ -101,7 +101,7 @@ def render_listing(rows):
 </head>
 <body>
   <main>
-    <img class="mark" src="/logo.svg" alt="">
+    <a href="/"><img class="mark" src="/logo.svg" alt="Goosen Games"></a>
     <h1>Same Great Taste — versions</h1>
     <p class="lede">Every build that has shipped, kept playable at its own address.
       <a href="/samegreattaste">/samegreattaste</a> always serves the current one.</p>
