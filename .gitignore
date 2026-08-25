@@ -12,3 +12,6 @@
 # logs / deps
 node_modules/
 *.log
+
+# local dev tooling
+.claude/
