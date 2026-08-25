@@ -19,6 +19,7 @@ samegreattaste/
   v4/index.html               /samegreattaste/v4
   versions/index.html         /samegreattaste/versions — generated listing
 tools/
+  add_site_link.py            appends the title-screen link back to the site
   round_png.py                rounds PNG corners with real alpha (stdlib only)
   release.py                  archives a build and rebuilds the listing
 ```
@@ -39,8 +40,17 @@ is opt-in at its own URL, badged `beta`. To change which build is served, copy
 it over `samegreattaste/index.html` and run `--relist` — the listing works out
 what is being served by comparing bytes, so it cannot fall out of sync.
 
-Snapshots are byte-identical copies and are not edited afterwards, so an
-archived build behaves exactly as it did the day it shipped.
+Snapshots are copies of the shipped file, with one deliberate exception: each
+carries an appended link back to the site, added by `tools/add_site_link.py`,
+because otherwise anyone who opened a version directly was stranded there. The
+game itself is untouched — the link is a sibling element scoped by CSS to the
+title screen, with no JavaScript and no hook into the game's rendering. The
+original bytes remain in git history.
+
+Nothing else is edited afterwards, so an archived build otherwise behaves as it
+did the day it shipped. When adding a build, run `add_site_link.py` over both
+the archive and `samegreattaste/index.html` so the two stay byte-identical —
+that comparison is how the listing knows which build is being served.
 
 **Archiving a build:**
 

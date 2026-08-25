@@ -3057,5 +3057,27 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && S)
   render();
 })();
 </script>
+<!-- Appended by tools/add_site_link.py — not part of the original build.
+     A way back to the site, on the title screen only. -->
+<style>
+  .gg-sitelink{display:none}
+  body:has(.title-screen) .gg-sitelink{
+    display:block;
+    position:fixed;
+    right:max(16px, env(safe-area-inset-right));
+    bottom:max(16px, env(safe-area-inset-bottom));
+    z-index:45;
+    font:400 .78rem/1 var(--font-body);
+    color:var(--ink2);
+    text-decoration:none;
+    opacity:.75;
+    border-bottom:1px solid currentColor;
+    padding-bottom:.15em;
+    transition:opacity .18s ease, color .18s ease;
+  }
+  body:has(.title-screen) .gg-sitelink:hover,
+  body:has(.title-screen) .gg-sitelink:focus-visible{opacity:1;color:var(--accent)}
+</style>
+<a class="gg-sitelink" href="/samegreattaste/versions">other versions</a>
 </body>
 </html>
