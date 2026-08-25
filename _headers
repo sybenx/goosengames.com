@@ -5,18 +5,25 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
 
+# Asset filenames here are unversioned — logo.svg keeps its name when its
+# contents change — so the cache lifetime is also the worst case for how long
+# a wrong response survives at the edge. This was set to 7 days once, while
+# /logo.svg did not yet exist; Pages answered 200 with index.html, the edge
+# cached that HTML under the .svg URL, and it took a manual purge to clear.
+# One day keeps these fast while letting any such mistake age out on its own.
 /logo.svg
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=86400
 
 /*.png
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=86400
 
 /favicon.ico
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=86400
 
 /site.webmanifest
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=86400
 
+# HTML always revalidates, which is also the Pages default for it.
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

@@ -82,6 +82,25 @@ built with macOS `qlmanage` plus `sips`, and `favicon.ico` was assembled by
 hand as an ICO wrapping two PNGs. Note `qlmanage` flattens alpha to white, so
 it is only safe for the square icons, which are opaque by construction.
 
+## If an asset serves the wrong thing
+
+Cloudflare's edge cache is separate from Pages, and a new deployment does not
+purge it. If a request arrives for a file that is not deployed yet, Pages
+answers 200 with HTML, and `_headers` then caches *that* under the asset's URL
+for its full lifetime — a new deploy will not dislodge it.
+
+To tell an edge problem from an origin one, add a query string. It changes the
+cache key, so the response comes from the origin:
+
+```bash
+curl -sI https://goosengames.com/logo.svg          # what visitors get
+curl -sI https://goosengames.com/logo.svg?cb=1     # what is actually deployed
+```
+
+If those disagree, the deployment is fine and the cache is stale. Fix it in the
+Cloudflare dashboard under Caching → Configuration → Purge Cache, purging that
+one URL. Nothing in this repo can clear it.
+
 ## Local preview
 
 ```bash
