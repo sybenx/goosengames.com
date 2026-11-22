@@ -52,6 +52,11 @@ did the day it shipped. When adding a build, run `add_site_link.py` over both
 the archive and `samegreattaste/index.html` so the two stay byte-identical —
 that comparison is how the listing knows which build is being served.
 
+One fix was made in place, in v3, v4 and the live copy alike (2026-11-22): the
+"line ran long" note now shows at 8 people turned away, the point where
+strangers stop becoming regulars, instead of at 4. It changes no saved state.
+See `act1-ceiling-notes.md`, item 1.
+
 **Archiving a build:**
 
 ```bash
