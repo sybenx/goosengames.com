@@ -948,7 +948,7 @@ function resolveWeekAct1(){
   let demand = regularUnits + strangerUnits;
   let served = Math.round(Math.min(demand, cap)); // whole burgers — the receipt's math is the real math
   S.turnedAway = Math.max(0, Math.round(demand - cap));
-  if (S.turnedAway > 3) lines.push({ note: 'The line ran long — about ' + S.turnedAway + ' people gave up waiting this week.' });
+  if (S.turnedAway >= 8) lines.push({ note: 'The line ran long — about ' + S.turnedAway + ' people gave up waiting this week.' });
 
   // money
   const revenue = served * S.price;
